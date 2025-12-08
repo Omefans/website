@@ -4,104 +4,92 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Gallery — NSFWFUN</title>
+
 <style>
-  :root{--accent:#ff4fd8;--bg-overlay:rgba(0,0,0,0.35);--text:#fff;--max-width:1100px}
-  html,body{height:100%}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    background-image:url('https://cdn.discordapp.com/attachments/692760849428906046/1447037807624323092/vivid-blurred-colorful-wallpaper-background.jpg?ex=69362a7a&is=6934d8fa&hm=91615ab942e44cede69cd94e7adaef0a65d36e454a386cd5db71fb37dbbde5a7&');
-    background-size:cover;background-position:center;background-attachment:fixed;color:var(--text)}
-  .site{max-width:var(--max-width);margin:0 auto;padding:20px;box-sizing:border-box}
-  header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:14px;backdrop-filter:blur(10px);background:var(--bg-overlay)}
-  .logo{font-size:32px;font-weight:900;background:linear-gradient(90deg,#ff00f7,#ff4fd8,#b44bff,#7b4dff);-webkit-background-clip:text;color:transparent;text-decoration:none}
-  nav a{margin-left:18px;color:#ffe4ff;text-decoration:none;font-weight:700;font-size:18px;text-shadow:0 0 6px rgba(0,0,0,0.7)}
-  h1{margin-top:20px;font-size:34px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
-  .card{background:rgba(255,255,255,0.07);border-radius:12px;padding:12px;display:flex;flex-direction:column;min-height:220px;backdrop-filter:blur(6px)}
-  .thumb{height:150px;border-radius:8px;overflow:hidden;background:#111}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .title{font-weight:700;margin-top:10px}
-  .meta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-size:13px}
-  .btn{padding:8px 10px;border-radius:10px;border:0;background:rgba(255,255,255,0.12);color:var(--text);cursor:pointer;font-weight:700}
-  /* viewer */
-  #viewer{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;align-items:center;justify-content:center;padding:18px}
-  #viewer[open]{display:flex}
-  .viewer-card{max-width:1100px;width:100%;background:linear-gradient(180deg,rgba(7,8,12,0.95),rgba(7,8,12,0.8));border-radius:12px;padding:16px;box-sizing:border-box}
-  .viewer-media{height:60vh;border-radius:10px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
-  .viewer-media img{max-width:100%;max-height:100%;object-fit:contain}
-  .close{margin-top:12px;padding:10px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:800;cursor:pointer}
-  @media (max-width:820px){ .viewer-media{height:45vh} }
-  :focus{outline:3px solid rgba(255,79,216,0.25);outline-offset:3px}
+  body {
+    margin:0;
+    font-family: Inter, sans-serif;
+    background-image:url('https://cdn.discordapp.com/attachments/692760849428906046/1447037807624323092/vivid-blurred-colorful-wallpaper-background.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:#fff;
+  }
+  .site { max-width:1100px; margin:0 auto; padding:20px; }
+
+  header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px;
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.35);
+  }
+  nav a{
+    margin-left:18px;
+    font-weight:700;
+    color:#ffe4ff;
+    text-decoration:none;
+  }
+
+  .grid{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:16px;
+  }
+  .card{
+    background:rgba(255,255,255,0.07);
+    border-radius:12px;
+    padding:12px;
+    backdrop-filter:blur(8px);
+  }
+  .thumb{
+    height:150px;
+    border-radius:8px;
+    overflow:hidden;
+    margin-bottom:10px;
+  }
+  .thumb img{
+    width:100%;height:100%;object-fit:cover;
+  }
+  .title{font-weight:700;font-size:18px}
 </style>
+
 </head>
 <body>
-  <div class="site">
-    <header>
-      <a class="logo" href="https://www.nsfwfun.site/">NSFWFUN</a>
-      <nav aria-label="Main">
-        <a href="https://www.nsfwfun.site/">Home</a>
-        <a href="https://www.nsfwfun.site/p/gallery.html" aria-current="page">Gallery</a>
-        <a href="https://www.nsfwfun.site/p/contact.html">Contact</a>
-      </nav>
-    </header>
 
-    <main>
-      <h1>Gallery</h1>
+<div class="site">
 
-      <section>
-        <div id="grid" class="grid" role="list">
-          <article class="card" role="listitem">
-            <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1400" alt="Sample model 1"></div>
-            <div class="title">Sample Model 1</div>
-            <div class="meta"><time datetime="2025-12-04">4 days ago</time><button class="btn open" data-src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1400">Open</button></div>
-          </article>
+<header>
+  <h2>NSFWFUN</h2>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-          <article class="card" role="listitem">
-            <div class="thumb"><img loading="lazy" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1400" alt="Sample model 2"></div>
-            <div class="title">Sample Model 2</div>
-            <div class="meta"><time datetime="2025-11-30">6 days ago</time><button class="btn open" data-src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1400">Open</button></div>
-          </article>
-        </div>
-      </section>
-    </main>
+<h1>Gallery</h1>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="thumb"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1"></div>
+    <div class="title">Sample Model 1</div>
+    <p>4 days ago</p>
   </div>
 
-  <div id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" tabindex="-1">
-    <div class="viewer-card" role="document">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <h3 id="viewerTitle" style="margin:0">Preview</h3>
-        <button id="closeViewer" class="close">Close</button>
-      </div>
-      <div class="viewer-media" id="viewerMedia" aria-live="polite">
-        <img id="viewerImg" src="" alt="" />
-      </div>
-    </div>
+  <div class="card">
+    <div class="thumb"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2"></div>
+    <div class="title">Sample Model 2</div>
+    <p>6 days ago</p>
   </div>
 
-<script>
-  const opens = Array.from(document.querySelectorAll('.open'));
-  const viewer = document.getElementById('viewer');
-  const viewerImg = document.getElementById('viewerImg');
-  const closeViewer = document.getElementById('closeViewer');
+</div>
 
-  function open(src, alt){
-    viewerImg.src = src;
-    viewerImg.alt = alt || 'Preview';
-    viewer.setAttribute('open','');
-    viewer.style.display = 'flex';
-    closeViewer.focus();
-  }
-  function close(){
-    viewer.removeAttribute('open');
-    viewer.style.display = 'none';
-    viewerImg.src = '';
-  }
+</div>
 
-  opens.forEach(btn => {
-    btn.addEventListener('click', () => open(btn.dataset.src, btn.closest('.card').querySelector('.title').textContent));
-  });
-  closeViewer.addEventListener('click', close);
-  viewer.addEventListener('pointerdown', e => { if(e.target === viewer) close(); });
-  window.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
-</script>
 </body>
 </html>
