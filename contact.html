@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Contact — NSFWFUN</title>
+<style>
+  :root{--accent:#ff4fd8;--bg-overlay:rgba(0,0,0,0.35);--text:#fff;--max-width:900px}
+  html,body{height:100%}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    background-image: url('https://cdn.discordapp.com/attachments/692760849428906046/1447037807624323092/vivid-blurred-colorful-wallpaper-background.jpg?ex=69362a7a&is=6934d8fa&hm=91615ab942e44cede69cd94e7adaef0a65d36e454a386cd5db71fb37dbbde5a7&');
+    background-size:cover;background-position:center;background-attachment:fixed;color:var(--text)}
+  .site{max-width:var(--max-width);margin:0 auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:14px;backdrop-filter:blur(10px);background:var(--bg-overlay)}
+  .logo{font-weight:900;font-size:28px;background:linear-gradient(90deg,#ff00f7,#ff4fd8,#b44bff,#7b4dff);-webkit-background-clip:text;color:transparent;text-decoration:none}
+  nav a{margin-left:16px;color:#ffe4ff;text-decoration:none;font-weight:700}
+  main{margin-top:20px;background:rgba(0,0,0,0.35);padding:18px;border-radius:12px;backdrop-filter:blur(8px)}
+  form{display:grid;grid-template-columns:1fr 320px;gap:16px}
+  label{font-weight:700;font-size:14px}
+  input,textarea{padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.06);color:var(--text);min-height:44px}
+  textarea{min-height:160px;resize:vertical}
+  .submit{grid-column:1/-1;padding:12px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:800;cursor:pointer}
+  .helper{font-size:13px;opacity:0.85}
+  @media (max-width:880px){ form{grid-template-columns:1fr} }
+  :focus{outline:3px solid rgba(255,79,216,0.25);outline-offset:3px}
+</style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <a class="logo" href="https://www.nsfwfun.site/">NSFWFUN</a>
+      <nav aria-label="Main">
+        <a href="https://www.nsfwfun.site/">Home</a>
+        <a href="https://www.nsfwfun.site/p/gallery.html">Gallery</a>
+        <a href="https://www.nsfwfun.site/p/contact.html" aria-current="page">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Contact Us</h1>
+      <p class="helper">Have a question or want a preview? Fill the form and we'll get back to you.</p>
+
+      <form id="contactForm" novalidate>
+        <div>
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required placeholder="Jane Doe" />
+          <label for="email" style="margin-top:8px">Email address</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" />
+          <label for="subject" style="margin-top:8px">Subject</label>
+          <input id="subject" name="subject" type="text" required placeholder="Short subject" />
+        </div>
+
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell us what you need..."></textarea>
+          <div class="helper" style="margin-top:8px">Tip: include folder name or model id for faster support.</div>
+        </div>
+
+        <div style="grid-column:1/-1;display:flex;gap:12px;align-items:center">
+          <div style="flex:1">
+            <label for="humanCheck">Anti-spam — what's 3 + 4?</label>
+            <input id="humanCheck" name="humanCheck" type="text" placeholder="Answer here" />
+          </div>
+          <div>
+            <button type="submit" class="submit">Send message</button>
+          </div>
+        </div>
+
+        <p style="grid-column:1/-1;margin-top:8px;font-size:13px;opacity:0.9">By contacting us you agree to our <a href="#" style="color:var(--accent)">privacy policy</a>.</p>
+      </form>
+
+      <div id="result" role="status" style="margin-top:12px"></div>
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const subject = form.subject.value.trim();
+      const message = form.message.value.trim();
+      const human = form.humanCheck.value.trim();
+
+      if(!name || !email || !subject || !message){
+        result.textContent = 'Please fill all required fields.';
+        result.style.color = 'tomato';
+        return;
+      }
+      if(human !== '7'){
+        result.textContent = 'Anti-spam check failed.';
+        result.style.color = 'tomato';
+        return;
+      }
+      result.textContent = 'Sending…';
+      result.style.color = 'white';
+      setTimeout(() => {
+        result.textContent = 'Thanks! Your message was sent.';
+        result.style.color = 'lightgreen';
+        form.reset();
+      }, 700);
+    });
+  </script>
+</body>
+</html>
