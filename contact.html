@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NSFWFUN — Contact</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">
+    <svg class="brand-icon" viewBox="0 0 24 24" width="36" height="36" aria-hidden="true">
+      <defs><linearGradient id="g3" x1="0" x2="1"><stop offset="0" stop-color="#ff00f7"/><stop offset="1" stop-color="#7b4dff"/></linearGradient></defs>
+      <rect rx="6" ry="6" width="24" height="24" fill="url(#g3)"></rect>
+      <text x="50%" y="55%" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter, sans-serif">NF</text>
+    </svg>
+    <a class="brand-text" href="index.html">NSFWFUN</a>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Contact Us</h1>
+  <p class="lead">Send a message — we reply within 24 hours.</p>
+
+  <!-- Replace FORM_ID in form action with your Formspree ID (or use formspree.io/f/{your id}) -->
+  <form id="contactForm" action="https://formspree.io/f/FORM_ID" method="POST">
+    <label for="name">Name</label>
+    <input id="name" name="name" required>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required>
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+    <div style="margin-top:12px">
+      <button class="btn" type="submit">Send Message</button>
+    </div>
+  </form>
+
+  <div id="formResult" aria-live="polite"></div>
+</main>
+
+<footer>
+  <div>© 2025 NSFWFUN</div>
+</footer>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  // progressive enhancement - allow normal POST but show message
+  var res = document.getElementById('formResult');
+  res.textContent = 'Sending…';
+});
+</script>
+</body>
+</html>
