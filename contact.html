@@ -26,11 +26,15 @@
     backdrop-filter:blur(10px);
     background:rgba(0,0,0,0.35);
   }
-  nav a{
+  nav a, nav button{
     margin-left:18px;
     font-weight:700;
     color:#ffe4ff;
     text-decoration:none;
+    background:none;
+    border:0;
+    cursor:pointer;
+    font-size:16px;
   }
 
   .input,textarea{
@@ -41,8 +45,9 @@
     background:rgba(255,255,255,0.1);
     color:#fff;
     margin-top:8px;
+    box-sizing:border-box;
   }
-  button{
+  button.send{
     padding:10px 16px;
     border-radius:8px;
     border:none;
@@ -51,6 +56,10 @@
     font-weight:700;
     margin-top:12px;
     cursor:pointer;
+  }
+  @media (max-width:520px){
+    header{flex-direction:column;align-items:flex-start;gap:12px}
+    nav a{margin-left:0}
   }
 </style>
 
@@ -61,22 +70,58 @@
 
 <header>
   <h2>NSFWFUN</h2>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
+  <nav aria-label="Main navigation">
+    <a href="/" onclick="navTo('/', event)">Home</a>
+    <a href="/gallery.html" onclick="navTo('/gallery.html', event)">Gallery</a>
+    <a href="/contact.html" onclick="navTo('/contact.html', event)">Contact</a>
   </nav>
 </header>
 
-<h1>Contact Us</h1>
+<main>
+  <h1>Contact Us</h1>
 
-<input class="input" placeholder="Your Name">
-<input class="input" placeholder="Your Email">
-<textarea class="input" placeholder="Your Message"></textarea>
+  <input id="name" class="input" placeholder="Your Name" aria-label="Your Name">
+  <input id="email" class="input" placeholder="Your Email" aria-label="Your Email">
+  <textarea id="message" class="input" placeholder="Your Message" aria-label="Your Message"></textarea>
 
-<button onclick="alert('Message sent! (demo)')">Send Message</button>
+  <button class="send" id="sendBtn">Send Message</button>
+</main>
 
 </div>
+
+<script>
+function navTo(href, ev){
+  try{
+    if(ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) return;
+    ev.preventDefault();
+    try{
+      history.pushState({}, '', href);
+      window.location.href = href;
+    }catch(e){
+      window.location.href = href;
+    }
+  }catch(e){
+    window.location.href = href;
+  }
+}
+
+// Demo client-side send - replace with Formspree or your backend if you want real email sending
+document.getElementById('sendBtn').addEventListener('click', function(){
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  if(!name || !email || !message){
+    alert('Please fill all fields.');
+    return;
+  }
+  alert('Message sent (demo). Thanks, ' + name + '!');
+  document.getElementById('name').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('message').value = '';
+  // Optionally navigate back to home
+  window.location.href = '/';
+});
+</script>
 
 </body>
 </html>
