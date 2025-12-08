@@ -1511,6 +1511,19 @@ html {
 	}
 }
 
+/* New rule for the large album card */
+.big-folder:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 30px rgba(255, 0, 234, 0.4);
+	transition: all 0.3s ease;
+}
+
+/* Style the affiliate link overlay/wrapper */
+.affiliate-link-wrapper {
+    text-decoration: none; /* Remove underline from the main link */
+    display: block;
+}
+
 .gallery-item {
 	position: relative;
 	height: 140px;
@@ -2420,4 +2433,5 @@ html {
 		flex: 1;
 		min-width: 0;
 	}
+
 }
