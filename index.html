@@ -78,6 +78,11 @@
     margin-top:12px;
     cursor:pointer;
   }
+  /* small responsive nicety */
+  @media (max-width:520px){
+    header{flex-direction:column;gap:12px;align-items:flex-start}
+    nav a { margin-left:0; margin-right:12px; display:inline-block; }
+  }
 </style>
 
 </head>
@@ -87,33 +92,34 @@
 
 <header>
   <h2>NSFWFUN</h2>
-  <nav>
-    <a onclick="showPage('home')">Home</a>
-    <a onclick="showPage('gallery')">Gallery</a>
-    <a onclick="showPage('contact')">Contact</a>
+  <nav aria-label="Main navigation">
+    <!-- using hash links prevents host routing and 404s -->
+    <a href="#home" onclick="showPage('home'); return false;">Home</a>
+    <a href="#gallery" onclick="showPage('gallery'); return false;">Gallery</a>
+    <a href="#contact" onclick="showPage('contact'); return false;">Contact</a>
   </nav>
 </header>
 
 <!-- HOME PAGE -->
-<div id="home" class="page active">
-  <h1>Welcome to NSFWFUN</h1>
+<div id="home" class="page active" role="region" aria-labelledby="home-title">
+  <h1 id="home-title">Welcome to NSFWFUN</h1>
   <p>Choose Gallery to view folders.</p>
 </div>
 
 <!-- GALLERY PAGE -->
-<div id="gallery" class="page">
-  <h1>Gallery</h1>
+<div id="gallery" class="page" role="main" aria-labelledby="gallery-title">
+  <h1 id="gallery-title">Gallery</h1>
 
-  <div class="grid">
+  <div class="grid" id="grid">
 
-    <div class="card">
-      <div class="thumb"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" /></div>
+    <div class="card" role="article">
+      <div class="thumb" aria-hidden="true"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" alt="Sample 1"/></div>
       <div class="title">Sample Model 1</div>
       <p>4 days ago</p>
     </div>
 
-    <div class="card">
-      <div class="thumb"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" /></div>
+    <div class="card" role="article">
+      <div class="thumb" aria-hidden="true"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="Sample 2"/></div>
       <div class="title">Sample Model 2</div>
       <p>6 days ago</p>
     </div>
@@ -122,32 +128,97 @@
 </div>
 
 <!-- CONTACT PAGE -->
-<div id="contact" class="page">
-  <h1>Contact Us</h1>
+<div id="contact" class="page" role="main" aria-labelledby="contact-title">
+  <h1 id="contact-title">Contact Us</h1>
 
-  <input class="input" placeholder="Your Name">
-  <input class="input" placeholder="Your Email">
-  <textarea class="input" placeholder="Your Message"></textarea>
+  <label for="name" class="sr-only" style="position:absolute;left:-9999px">Your name</label>
+  <input id="name" class="input" placeholder="Your Name" aria-label="Your Name">
 
-  <button onclick="alert('Message sent! (demo)')">Send Message</button>
+  <label for="email" class="sr-only" style="position:absolute;left:-9999px">Your email</label>
+  <input id="email" class="input" placeholder="Your Email" aria-label="Your Email">
+
+  <label for="message" class="sr-only" style="position:absolute;left:-9999px">Your message</label>
+  <textarea id="message" class="input" placeholder="Your Message" aria-label="Your Message"></textarea>
+
+  <button id="sendBtn">Send Message</button>
 </div>
 
 </div>
 
 <script>
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+(function () {
+  // safe showPage that validates id and toggles pages
+  function showPage(id) {
+    const el = document.getElementById(id);
+    if (!el) {
+      // fallback to home if id not found
+      return showPage('home');
+    }
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
 
-  // Change URL hash for navigation (optional)
-  history.pushState(null, "", "#" + id);
-}
+    // set hash without causing additional navigation
+    if (location.hash !== '#' + id) {
+      history.pushState({ page: id }, "", '#' + id);
+    }
+    // scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-// Load correct page when visiting URL#gallery etc.
-if(location.hash){
-  const page = location.hash.replace("#","");
-  showPage(page);
-}
+  // handle browser back/forward
+  window.addEventListener('popstate', function (e) {
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const target = document.getElementById(hash);
+      if (target) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        target.classList.add('active');
+      } else {
+        // unknown hash -> home
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('home').classList.add('active');
+      }
+    } else {
+      // no hash -> home
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('home').classList.add('active');
+    }
+  });
+
+  // attach send button (demo behavior)
+  document.getElementById('sendBtn').addEventListener('click', function () {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill all fields.');
+      return;
+    }
+    // demo action — replace with actual submit (Formspree, fetch to API, etc.)
+    alert('Message sent (demo). Thank you, ' + name + '!');
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+    showPage('home');
+  });
+
+  // initialize on DOM ready
+  window.addEventListener('DOMContentLoaded', function () {
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      showPage(hash);
+    } else {
+      // ensure a visible page (home) in case initial markup lost "active"
+      if (!document.querySelector('.page.active')) {
+        document.getElementById('home').classList.add('active');
+      }
+    }
+  });
+
+  // expose showPage globally for inline onclick attributes
+  window.showPage = showPage;
+})();
 </script>
 
 </body>
