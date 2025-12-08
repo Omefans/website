@@ -29,18 +29,23 @@
     margin-bottom:20px;
   }
 
-  nav a {
+  nav button {
     margin-left:18px;
     font-weight:700;
+    background:none;
+    border:none;
     color:#ffe4ff;
     cursor:pointer;
-    text-decoration:none;
+    font-size:18px;
   }
 
-  h1 { margin-top:0; }
-
-  .page { display:none; animation:fade .3s ease; }
-  .active { display:block; }
+  .page {
+    display:none;
+    animation:fade .3s ease;
+  }
+  .active {
+    display:block;
+  }
 
   @keyframes fade { from{opacity:0} to{opacity:1} }
 
@@ -64,7 +69,9 @@
     margin-bottom:10px;
   }
   .thumb img{
-    width:100%;height:100%;object-fit:cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
   }
   .title{font-weight:700;font-size:18px}
 
@@ -78,7 +85,7 @@
     color:#fff;
     margin-top:8px;
   }
-  button{
+  button.send{
     padding:10px 16px;
     border-radius:8px;
     border:none;
@@ -88,7 +95,6 @@
     margin-top:12px;
     cursor:pointer;
   }
-
 </style>
 </head>
 
@@ -99,9 +105,9 @@
 <header>
   <h2>NSFWFUN</h2>
   <nav>
-    <a href="#home" onclick="showPage('home')">Home</a>
-    <a href="#gallery" onclick="showPage('gallery')">Gallery</a>
-    <a href="#contact" onclick="showPage('contact')">Contact</a>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('gallery')">Gallery</button>
+    <button onclick="showPage('contact')">Contact</button>
   </nav>
 </header>
 
@@ -144,29 +150,16 @@
   <input class="input" placeholder="Your Email">
   <textarea class="input" placeholder="Your Message"></textarea>
 
-  <button onclick="alert('Message sent! (Demo)')">Send Message</button>
+  <button class="send" onclick="alert('Message Sent (Demo)')">Send Message</button>
 </div>
 
 </div>
 
 <script>
 function showPage(id){
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(p => p.style.display = "none");
-
-  // Show selected page
-  document.getElementById(id).style.display = "block";
-
-  // Save page to URL
-  location.hash = id;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
-
-// Load correct page on refresh
-window.addEventListener("load", () => {
-  let page = location.hash.replace("#", "");
-  if (!page) page = "home";
-  showPage(page);
-});
 </script>
 
 </body>
