@@ -15,7 +15,6 @@
     background-attachment:fixed;
     color:#fff;
   }
-
   .site { max-width:1100px; margin:0 auto; padding:20px; }
 
   header {
@@ -26,25 +25,18 @@
     border-radius:14px;
     backdrop-filter:blur(10px);
     background:rgba(0,0,0,0.35);
-    margin-bottom:20px;
   }
-
-  nav a {
+  nav a{
     margin-left:18px;
     font-weight:700;
     color:#ffe4ff;
-    cursor:pointer;
     text-decoration:none;
+    cursor:pointer;
   }
-
-  h1 { margin-top:0; }
-
   .page { display:none; animation:fade .3s ease; }
   .active { display:block; }
-
   @keyframes fade { from{opacity:0} to{opacity:1} }
 
-  /* Gallery */
   .grid{
     margin-top:20px;
     display:grid;
@@ -67,8 +59,6 @@
     width:100%;height:100%;object-fit:cover;
   }
   .title{font-weight:700;font-size:18px}
-
-  /* Contact */
   .input,textarea{
     width:100%;
     padding:10px;
@@ -88,10 +78,9 @@
     margin-top:12px;
     cursor:pointer;
   }
-
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="site">
@@ -99,36 +88,32 @@
 <header>
   <h2>NSFWFUN</h2>
   <nav>
-    <a href="#home" onclick="showPage('home')">Home</a>
-    <a href="#gallery" onclick="showPage('gallery')">Gallery</a>
-    <a href="#contact" onclick="showPage('contact')">Contact</a>
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('gallery')">Gallery</a>
+    <a onclick="showPage('contact')">Contact</a>
   </nav>
 </header>
 
-<!-- HOME -->
+<!-- HOME PAGE -->
 <div id="home" class="page active">
   <h1>Welcome to NSFWFUN</h1>
-  <p>Click gallery to view folders.</p>
+  <p>Choose Gallery to view folders.</p>
 </div>
 
-<!-- GALLERY -->
+<!-- GALLERY PAGE -->
 <div id="gallery" class="page">
   <h1>Gallery</h1>
 
   <div class="grid">
 
     <div class="card">
-      <div class="thumb">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" />
-      </div>
+      <div class="thumb"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" /></div>
       <div class="title">Sample Model 1</div>
       <p>4 days ago</p>
     </div>
 
     <div class="card">
-      <div class="thumb">
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" />
-      </div>
+      <div class="thumb"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" /></div>
       <div class="title">Sample Model 2</div>
       <p>6 days ago</p>
     </div>
@@ -136,7 +121,7 @@
   </div>
 </div>
 
-<!-- CONTACT -->
+<!-- CONTACT PAGE -->
 <div id="contact" class="page">
   <h1>Contact Us</h1>
 
@@ -144,29 +129,25 @@
   <input class="input" placeholder="Your Email">
   <textarea class="input" placeholder="Your Message"></textarea>
 
-  <button onclick="alert('Message sent! (Demo)')">Send Message</button>
+  <button onclick="alert('Message sent! (demo)')">Send Message</button>
 </div>
 
 </div>
 
 <script>
 function showPage(id){
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(p => p.style.display = "none");
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-  // Show selected page
-  document.getElementById(id).style.display = "block";
-
-  // Save page to URL
-  location.hash = id;
+  // Change URL hash for navigation (optional)
+  history.pushState(null, "", "#" + id);
 }
 
-// Load correct page on refresh
-window.addEventListener("load", () => {
-  let page = location.hash.replace("#", "");
-  if (!page) page = "home";
+// Load correct page when visiting URL#gallery etc.
+if(location.hash){
+  const page = location.hash.replace("#","");
   showPage(page);
-});
+}
 </script>
 
 </body>
