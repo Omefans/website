@@ -3,262 +3,221 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>NSFWFUN — single file safe build</title>
+<title>NSFWFUN</title>
 
 <style>
-  :root{
-    --accent:#ff4fd8;
-    --glass: rgba(0,0,0,0.35);
-  }
-  html,body{height:100%;margin:0}
-  body{
-    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    color:#fff;
+  body {
+    margin:0;
+    font-family: Inter, sans-serif;
     background-image:url('https://cdn.discordapp.com/attachments/692760849428906046/1447037807624323092/vivid-blurred-colorful-wallpaper-background.jpg');
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
+    color:#fff;
   }
-  .site{max-width:1100px;margin:0 auto;padding:20px;box-sizing:border-box}
+  .site { max-width:1100px; margin:0 auto; padding:20px; }
 
-  header{
-    display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:14px;
-    backdrop-filter:blur(10px);background:var(--glass);
+  header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px;
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.35);
   }
-  .logo{
-    font-weight:900;font-size:30px;
-    background:linear-gradient(90deg,#ff00f7,#ff4fd8,#b44bff,#7b4dff);
-    background-size:300% 300%;-webkit-background-clip:text;color:transparent;
-    animation:glow 6s linear infinite, floaty 3s ease-in-out infinite;display:inline-block;
+  nav a{
+    margin-left:18px;
+    font-weight:700;
+    color:#ffe4ff;
+    text-decoration:none;
+    cursor:pointer;
   }
-  @keyframes glow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-  .logo:hover{transform:scale(1.05) rotate(-1.5deg);filter:drop-shadow(0 0 14px rgba(255,79,216,.35));animation:glow 1.4s linear infinite}
+  .page { display:none; animation:fade .3s ease; }
+  .active { display:block; }
+  @keyframes fade { from{opacity:0} to{opacity:1} }
 
-  nav{display:flex;gap:12px;align-items:center}
-  nav button{
-    background:none;border:0;color:#ffe4ff;font-weight:800;font-size:16px;cursor:pointer;padding:8px;border-radius:8px;
+  .grid{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:16px;
   }
-  nav button:focus{outline:3px solid rgba(255,79,216,0.2)}
-
-  /* layout */
-  .hero{margin-top:20px;display:flex;gap:18px;align-items:center;padding:16px;border-radius:14px;background:var(--glass);backdrop-filter:blur(10px)}
-  .preview{width:160px;height:110px;border-radius:10px;background-image:url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d');background-size:cover;background-position:center}
-
-  /* pages */
-  .page{display:none}
-  .page.active{display:block;animation:fade .25s ease}
-  @keyframes fade{from{opacity:0}to{opacity:1}}
-
-  /* gallery */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
-  .card{background:rgba(255,255,255,0.07);border-radius:12px;padding:12px;backdrop-filter:blur(6px)}
-  .thumb{height:140px;border-radius:8px;overflow:hidden;margin-bottom:10px}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .title{font-weight:800;margin-bottom:6px}
-
-  /* contact */
-  .input,textarea{width:100%;padding:10px;border-radius:10px;border:0;background:rgba(255,255,255,0.12);color:#fff;margin-top:10px;box-sizing:border-box}
-  button.send{background:var(--accent);color:#fff;border:0;padding:12px 16px;border-radius:10px;font-weight:800;cursor:pointer;margin-top:12px}
-
-  /* debug overlay */
-  #debug {
-    position:fixed;right:12px;bottom:12px;width:260px;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);
-    color:#fff;padding:10px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,0.6)
+  .card{
+    background:rgba(255,255,255,0.07);
+    border-radius:12px;
+    padding:12px;
+    backdrop-filter:blur(8px);
   }
-  #debug pre{white-space:pre-wrap;word-break:break-word;max-height:160px;overflow:auto;margin:6px 0;padding:6px;background:rgba(255,255,255,0.03);border-radius:6px}
-  #debug button{background:#222;color:#fff;border:0;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;margin-right:6px}
-
-  @media(max-width:600px){.hero{flex-direction:column;align-items:flex-start}.preview{width:100%;height:140px}}
+  .thumb{
+    height:150px;
+    border-radius:8px;
+    overflow:hidden;
+    margin-bottom:10px;
+  }
+  .thumb img{
+    width:100%;height:100%;object-fit:cover;
+  }
+  .title{font-weight:700;font-size:18px}
+  .input,textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    background:rgba(255,255,255,0.1);
+    color:#fff;
+    margin-top:8px;
+  }
+  button{
+    padding:10px 16px;
+    border-radius:8px;
+    border:none;
+    background:#ff4fd8;
+    color:#fff;
+    font-weight:700;
+    margin-top:12px;
+    cursor:pointer;
+  }
+  /* small responsive nicety */
+  @media (max-width:520px){
+    header{flex-direction:column;gap:12px;align-items:flex-start}
+    nav a { margin-left:0; margin-right:12px; display:inline-block; }
+  }
 </style>
+
 </head>
 <body>
 
-<div class="site" id="siteRoot">
+<div class="site">
 
-  <header>
-    <div class="logo" aria-hidden="true">NSFWFUN</div>
-    <nav aria-label="Main">
-      <!-- BUTTONS only: hosting cannot rewrite these -->
-      <button id="navHome">Home</button>
-      <button id="navGallery">Gallery</button>
-      <button id="navContact">Contact</button>
-    </nav>
-  </header>
+<header>
+  <h2>NSFWFUN</h2>
+  <nav aria-label="Main navigation">
+    <!-- using hash links prevents host routing and 404s -->
+    <a href="#home" onclick="showPage('home'); return false;">Home</a>
+    <a href="#gallery" onclick="showPage('gallery'); return false;">Gallery</a>
+    <a href="#contact" onclick="showPage('contact'); return false;">Contact</a>
+  </nav>
+</header>
 
-  <!-- Home -->
-  <section id="page-home" class="page active" role="region" aria-labelledby="homeTitle">
-    <div class="hero">
-      <div class="preview" role="img" aria-label="Preview image"></div>
-      <div>
-        <h1 id="homeTitle">Media Gallery</h1>
-        <p>Click Gallery to view folders, or Contact to send a message.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery -->
-  <section id="page-gallery" class="page" role="region" aria-labelledby="galleryTitle">
-    <h2 id="galleryTitle">Gallery</h2>
-    <div class="grid" id="galleryGrid">
-      <!-- sample cards (replace or expand) -->
-      <article class="card">
-        <div class="thumb"><img alt="sample 1" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1"></div>
-        <div class="title">Sample Model 1</div>
-        <div class="meta">4 days ago</div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img alt="sample 2" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2"></div>
-        <div class="title">Sample Model 2</div>
-        <div class="meta">6 days ago</div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="page-contact" class="page" role="region" aria-labelledby="contactTitle">
-    <h2 id="contactTitle">Contact</h2>
-    <input id="c_name" class="input" placeholder="Your name" autocomplete="name" />
-    <input id="c_email" class="input" placeholder="Your email" type="email" autocomplete="email" />
-    <textarea id="c_message" class="input" placeholder="Your message"></textarea>
-    <button class="send" id="sendBtn">Send message (demo)</button>
-  </section>
-
+<!-- HOME PAGE -->
+<div id="home" class="page active" role="region" aria-labelledby="home-title">
+  <h1 id="home-title">Welcome to NSFWFUN</h1>
+  <p>Choose Gallery to view folders.</p>
 </div>
 
-<!-- Debug overlay (copy values for me if you still get errors) -->
-<div id="debug" aria-hidden="false">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <strong style="font-size:14px">Debug</strong>
-    <div>
-      <button id="dbgRefresh">Refresh</button>
-      <button id="dbgCopy">Copy</button>
+<!-- GALLERY PAGE -->
+<div id="gallery" class="page" role="main" aria-labelledby="gallery-title">
+  <h1 id="gallery-title">Gallery</h1>
+
+  <div class="grid" id="grid">
+
+    <div class="card" role="article">
+      <div class="thumb" aria-hidden="true"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" alt="Sample 1"/></div>
+      <div class="title">Sample Model 1</div>
+      <p>4 days ago</p>
     </div>
+
+    <div class="card" role="article">
+      <div class="thumb" aria-hidden="true"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" alt="Sample 2"/></div>
+      <div class="title">Sample Model 2</div>
+      <p>6 days ago</p>
+    </div>
+
   </div>
-  <div style="margin-top:8px">href: <small id="dbgHref"></small></div>
-  <div style="margin-top:6px">hash: <small id="dbgHash"></small></div>
-  <div style="margin-top:6px">history length: <small id="dbgHist"></small></div>
-  <div style="margin-top:8px">Last action:</div>
-  <pre id="dbgLog">(waiting)</pre>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="contact" class="page" role="main" aria-labelledby="contact-title">
+  <h1 id="contact-title">Contact Us</h1>
+
+  <label for="name" class="sr-only" style="position:absolute;left:-9999px">Your name</label>
+  <input id="name" class="input" placeholder="Your Name" aria-label="Your Name">
+
+  <label for="email" class="sr-only" style="position:absolute;left:-9999px">Your email</label>
+  <input id="email" class="input" placeholder="Your Email" aria-label="Your Email">
+
+  <label for="message" class="sr-only" style="position:absolute;left:-9999px">Your message</label>
+  <textarea id="message" class="input" placeholder="Your Message" aria-label="Your Message"></textarea>
+
+  <button id="sendBtn">Send Message</button>
+</div>
+
 </div>
 
 <script>
-/* Robust nav that cannot be intercepted by host routing.
-   It only uses JS to show/hide page sections (no <a href> except debug).
-   If something still fails, copy the debug overlay content and send it to me.
-*/
-
 (function () {
-  const pages = {
-    home: document.getElementById('page-home'),
-    gallery: document.getElementById('page-gallery'),
-    contact: document.getElementById('page-contact')
-  };
-
-  const dbg = {
-    href: document.getElementById('dbgHref'),
-    hash: document.getElementById('dbgHash'),
-    hist: document.getElementById('dbgHist'),
-    log: document.getElementById('dbgLog')
-  };
-
-  function log(msg){
-    const time = new Date().toLocaleTimeString();
-    dbg.log.textContent = `[${time}] ${msg}\n` + dbg.log.textContent;
-  }
-
-  function updateDebug(){
-    dbg.href.textContent = location.href;
-    dbg.hash.textContent = location.hash || '(none)';
-    dbg.hist.textContent = history.length;
-  }
-
-  function show(pageKey, pushState=true){
-    if(!pages[pageKey]) {
-      log('show() fallback -> home (unknown key: ' + pageKey + ')');
-      pageKey = 'home';
+  // safe showPage that validates id and toggles pages
+  function showPage(id) {
+    const el = document.getElementById(id);
+    if (!el) {
+      // fallback to home if id not found
+      return showPage('home');
     }
-    Object.values(pages).forEach(el => el.classList.remove('active'));
-    pages[pageKey].classList.add('active');
-    log('switched to ' + pageKey);
-    updateDebug();
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
 
-    // update hash for bookmarking but do NOT navigate to external URLs
-    if(pushState){
-      try {
-        history.replaceState({page:pageKey}, '', '#' + pageKey);
-      } catch(e) {
-        // ignore
+    // set hash without causing additional navigation
+    if (location.hash !== '#' + id) {
+      history.pushState({ page: id }, "", '#' + id);
+    }
+    // scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // handle browser back/forward
+  window.addEventListener('popstate', function (e) {
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const target = document.getElementById(hash);
+      if (target) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        target.classList.add('active');
+      } else {
+        // unknown hash -> home
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('home').classList.add('active');
       }
+    } else {
+      // no hash -> home
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('home').classList.add('active');
     }
-  }
+  });
 
-  // wire nav buttons
-  document.getElementById('navHome').addEventListener('click', () => show('home'));
-  document.getElementById('navGallery').addEventListener('click', () => show('gallery'));
-  document.getElementById('navContact').addEventListener('click', () => show('contact'));
+  // attach send button (demo behavior)
+  document.getElementById('sendBtn').addEventListener('click', function () {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-  // send button demo
-  document.getElementById('sendBtn').addEventListener('click', () => {
-    const name = document.getElementById('c_name').value.trim();
-    const email = document.getElementById('c_email').value.trim();
-    const msg = document.getElementById('c_message').value.trim();
-    if(!name || !email || !msg){
+    if (!name || !email || !message) {
       alert('Please fill all fields.');
-      log('sendBtn: validation failed');
       return;
     }
-    // demo feedback
+    // demo action — replace with actual submit (Formspree, fetch to API, etc.)
     alert('Message sent (demo). Thank you, ' + name + '!');
-    log('sendBtn: demo message sent for ' + name);
-    // optional: return to home
-    show('home');
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+    showPage('home');
   });
 
-  // if loaded with a hash (or when user clicks bookmarked link), show that page
-  function initialFromHash(){
-    const key = (location.hash || '').replace('#','');
-    if(key && pages[key]) {
-      show(key, false);
-      log('initialFromHash: showed ' + key);
+  // initialize on DOM ready
+  window.addEventListener('DOMContentLoaded', function () {
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      showPage(hash);
     } else {
-      show('home', false);
-      log('initialFromHash: defaulted to home');
+      // ensure a visible page (home) in case initial markup lost "active"
+      if (!document.querySelector('.page.active')) {
+        document.getElementById('home').classList.add('active');
+      }
     }
-  }
-
-  // show correct page when user uses back/forward
-  window.addEventListener('popstate', () => {
-    const key = (location.hash || '').replace('#','');
-    if(key && pages[key]) show(key, false);
-    else show('home', false);
-    updateDebug();
-    log('popstate fired');
   });
 
-  // debug buttons
-  document.getElementById('dbgRefresh').addEventListener('click', () => {
-    updateDebug();
-    log('debug refresh');
-  });
-  document.getElementById('dbgCopy').addEventListener('click', () => {
-    const text = `href: ${location.href}\nhash: ${location.hash || '(none)'}\nhistory: ${history.length}\nlastLog:\n${dbg.log.textContent.split('\\n').slice(0,10).join('\\n')}`;
-    navigator.clipboard?.writeText(text).then(() => {
-      alert('Debug info copied to clipboard — paste it here.');
-      log('debug copied to clipboard');
-    }, () => {
-      alert('Copy failed — please select and copy the debug box manually.');
-    });
-  });
-
-  // initial setup
-  updateDebug();
-  initialFromHash();
-  log('initialized');
-
-  // expose for manual testing if needed
-  window._nsfw = { show, log };
+  // expose showPage globally for inline onclick attributes
+  window.showPage = showPage;
 })();
 </script>
 
