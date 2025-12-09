@@ -2468,3 +2468,33 @@ html {
     }
 }
 /* ----------------------------------------------------------- */
+/* --- NEW MOBILE FIX: For very small screens (around 480px or less) --- */
+@media (max-width: 480px) {
+    /* 1. Ensure the wrapper shrinks and positions correctly */
+    .logo-container {
+        top: 20px !important; 
+        left: 20px !important;
+        width: 70% !important; /* Limit overall width */
+        min-width: 200px;
+    }
+    
+    /* 2. ENFORCE FLEX LAYOUT AND SHRUNKEN SIZE ON THE LINK ITSELF */
+    .logo a.logo {
+        flex-shrink: 1 !important; /* Allow the entire link to shrink */
+        gap: 10px !important; /* Reduce gap spacing on mobile */
+    }
+
+    /* 3. Adjustments for the logo image */
+    .logo a.logo img {
+        width: 60px !important; /* Smaller image width */
+        height: 60px !important; /* Smaller image height */
+    }
+    
+    /* 4. Adjustments for the accompanying text */
+    .logo a.logo .logo-text-header {
+        font-size: 1.2rem !important; /* Smaller font size */
+        white-space: nowrap; /* Prevent line break if possible */
+        overflow: hidden;
+    }
+}
+/* ---------------------------------------------------------------------- */
