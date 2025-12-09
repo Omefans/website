@@ -618,7 +618,7 @@ html {
 	width: 120%;
 	height: 80vh;
 	left: -10%;
-	background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+	background: linear-gradient(135deg, #1e3c72 0%, #2a5299 100%);
 	clip-path: polygon(0 40%, 20% 25%, 40% 35%, 60% 20%, 80% 30%, 100% 15%, 100% 100%, 0 100%);
 	transform: translateZ(-2px) scale(3);
 }
@@ -1838,6 +1838,32 @@ html {
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
+	/* New Mobile Header Centering Fix */
+	.logo-container {
+        /* This rule fixes centering on mobile */
+        position: relative !important;
+        top: 20px !important; 
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        opacity: 1 !important;
+        width: 100% !important; 
+        justify-content: center;
+        text-align: center;
+        display: flex;
+        align-items: center;
+    }
+	
+	/* Forced Larger Mobile Image Size (Mobile size is 100px) */
+    .logo-container img {
+        width: 100px !important; 
+        height: 100px !important;
+    }
+
+    /* Forced Larger Mobile Text Size */
+    .logo-container .logo-text-header {
+        font-size: 1.8rem !important; 
+    }
+
 	.hero-content {
 		top: calc(30vh + 120px);
 	}
@@ -2261,41 +2287,3 @@ html {
     max-width: 900px; 
 }
 /* ----------------------------------------------------------- */
-
-/* --- New CSS Mobile Fix Block --- */
-@media (max-width: 768px) {
-    /* Centering the entire logo container block */
-    .logo-container {
-        /* Override fixed positioning to allow for centering */
-        position: relative !important;
-        top: 20px !important; 
-        left: 50% !important; /* Move to center */
-        transform: translateX(-50%) !important; /* Correct centering */
-        opacity: 1 !important; /* Ensure visibility */
-        width: 100% !important; 
-        justify-content: center;
-        text-align: center;
-        
-        /* Ensure logo elements are centered within the container */
-        display: flex;
-        align-items: center;
-    }
-    
-    /* Target the image element within the logo link */
-    .logo-container img {
-        width: 100px !important; /* FORCED LARGER MOBILE IMAGE SIZE */
-        height: 100px !important;
-    }
-
-    /* Target the text element within the logo link */
-    .logo-container .logo-text-header {
-        font-size: 1.8rem !important; /* Larger text size */
-    }
-
-    /* Ensure the main hero content is still centered properly below the logo */
-    .hero-content {
-        /* Adjust top position to account for the larger fixed header */
-        margin-top: 150px; 
-    }
-}
-/* --- End New CSS Mobile Fix Block --- */
