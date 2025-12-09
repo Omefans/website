@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const paginationContainer = document.getElementById('pagination-controls');
 
     if (galleryContainer && paginationContainer) {
-        const itemsPerPage = 10; // MAX ITEMS PER PAGE
+        const itemsPerPage = 9; // MAX ITEMS PER PAGE
         const items = galleryContainer.querySelectorAll('.big-folder');
         const totalPages = Math.ceil(items.length / itemsPerPage);
         
@@ -189,3 +189,4 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+
