@@ -1708,11 +1708,10 @@ html {
 	flex-shrink: 0;
 }
 
-/* --- NEW CSS for Telegram Icon --- */
+/* Telegram Icon Style (Added earlier) */
 .info-icon.telegram {
     background: linear-gradient(135deg, #0088cc, #4ed6ff); /* Telegram Blue/Cyan */
 }
-/* ---------------------------------- */
 
 .info-text {
 	word-break: break-word;
@@ -2433,7 +2432,6 @@ html {
 		flex: 1;
 		min-width: 0;
 	}
-
 }
 
 /* --- NEW CSS for Simple Landing Page Centering Override --- */
@@ -2447,6 +2445,6 @@ html {
     /* Ensure the content itself is a block and centered */
     margin: 0 auto;
     width: 100%;
-    max-width: 900px; /* Adjust as needed */
+    max-width: 900px; 
 }
 /* ----------------------------------------------------------- */
