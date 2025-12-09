@@ -1,7 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
 
-/* NSFWFUN Main Stylesheet */
+/*
+
+NSFWFUN Main Stylesheet
+
+*/
 
 * {
 	margin: 0;
@@ -203,7 +207,61 @@ html {
 
 /* --- MOBILE RESPONSIVE FIXES (Max Width 768px) --- */
 @media (max-width: 768px) {
-    /* 1. Stack the buttons vertically and ensure they fit */
+    
+    /* 1. FORCE HEADER LOGO TO CENTER */
+    .logo-container {
+        position: relative !important;
+        top: 20px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        text-align: center !important;
+    }
+    
+    /* Ensure the internal link container is also centered */
+    .logo {
+        justify-content: center !important;
+        width: auto !important;
+    }
+    
+    /* Mobile Header Image Size */
+    .logo-container img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .logo-container .logo-text-header {
+        font-size: 1.5rem !important;
+    }
+
+    /* 2. FORCE CENTER LOGO (BIG ONE) TO CENTER */
+    .center-logo-img {
+        display: block !important;       /* Makes it a block element */
+        margin-left: auto !important;    /* Auto margin left */
+        margin-right: auto !important;   /* Auto margin right */
+        margin-bottom: 20px !important;
+        max-width: 70% !important;       /* Keeps it nicely sized */
+        height: auto !important;
+        filter: drop-shadow(0 0 20px rgba(255, 0, 234, 0.6)) !important;
+    }
+
+    /* 3. Fix the Subtitle Wrapping & Centering */
+    .hero-subtitle {
+        font-size: 1rem !important;
+        white-space: normal !important;
+        line-height: 1.5;
+        padding: 0 15px;
+        text-align: center !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* 4. Stack Buttons Vertically */
     .cta-container {
         flex-direction: column;
         align-items: center;
@@ -212,49 +270,21 @@ html {
     }
 
     .cta-button {
-        width: 100%;
-        max-width: 300px; /* Prevent them from becoming too wide */
+        width: 80% !important; /* Buttons take up 80% of screen width */
+        max-width: 300px;
         box-sizing: border-box;
-    }
-
-    /* 2. Fix the Subtitle Wrapping */
-    .hero-subtitle {
-        font-size: 1rem !important;
-        white-space: normal !important; /* Allow text to wrap */
-        line-height: 1.5;
-        padding: 0 10px;
-        letter-spacing: 0.1em;
-    }
-
-    /* 3. Fix the Center Logo Size on Mobile */
-    .center-logo-img {
-        max-width: 70% !important; /* Shrink logo on mobile */
-    }
-
-    /* 4. Fix the Header Logo & Positioning on Mobile */
-    .logo-container {
-        position: relative !important;
-        top: 20px !important; 
-        left: 0 !important;
-        width: 100% !important; 
-        justify-content: center;
         text-align: center;
-        display: flex;
-        align-items: center;
-    }
-    
-    .logo-container img {
-        width: 60px !important; /* Slightly smaller header icon */
-        height: 60px !important;
-    }
-    
-    .logo-container .logo-text-header {
-        font-size: 1.5rem !important;
     }
 
     /* Adjust main content spacing */
     .hero-content {
-        margin-top: 40px; /* Push content down below header */
+        margin-top: 30px; 
         padding-bottom: 50px;
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center; /* Flex centering for the column */
     }
 }
