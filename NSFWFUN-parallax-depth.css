@@ -19,50 +19,40 @@ body {
     color: var(--light);
     overflow-x: hidden;
     width: 100%;
+    /* Flex column ensures footer stays at bottom */
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
 }
 
-/* --- 2. ENTRANCE ANIMATIONS --- */
-@keyframes fadeZoomIn {
-    0% { opacity: 0; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* --- 3. LAYOUT ENGINE --- */
+/* --- 2. LAYOUT ENGINE --- */
 .main-wrapper {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    /* Allow it to grow with content */
+    min-height: 100vh; 
+    height: auto; 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     z-index: 10;
 }
 
-/* --- 4. HEADER LOGO (FIXED SIZE) --- */
+/* --- 3. HEADER LOGO --- */
 .logo-container {
-    position: absolute;
-    top: 40px;
-    left: 50px;
+    padding: 40px 0 0 60px; /* Use padding instead of absolute top/left */
+    width: 100%;
     z-index: 100;
-    animation: fadeZoomIn 1s ease forwards; /* Animate Header too */
 }
 
 .logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 15px;
     text-decoration: none;
 }
 
 .logo img {
-    width: 80px !important;  /* Locked size for PC */
+    width: 80px !important;
     height: 80px !important;
     filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));
 }
@@ -77,60 +67,74 @@ body {
     text-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
 }
 
-/* --- 5. CENTER CONTENT --- */
+/* --- 4. CENTER CONTENT --- */
 .hero-content {
-    text-align: center;
-    width: 100%;
-    max-width: 800px;
-    padding: 20px;
+    /* Flex auto pushes it to take available space */
+    flex: 1; 
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Center vertically if space allows */
     align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.container {
+    /* For Gallery/Contact pages */
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
 }
 
 /* Big Center Logo */
 .center-logo-img {
     width: 100%;
-    max-width: 450px !important; /* Limit PC size */
+    max-width: 450px !important; 
     height: auto;
     filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.6));
     margin-bottom: 20px;
-    
-    /* Animation: Zoom In immediately */
-    animation: fadeZoomIn 1s ease forwards;
 }
 
 /* Main Title */
-.hero-subtitle {
+.hero-subtitle, .section-title {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 40px;
+    color: #fff;
     text-shadow: 0 0 15px var(--primary);
-    
-    /* Animation: Fade Up with 0.3s delay */
-    opacity: 0;
-    animation: fadeInUp 1s ease forwards 0.3s;
+    margin-bottom: 30px;
 }
 
-/* --- 6. BUTTONS --- */
+.hero-subtitle { font-size: 1.5rem; letter-spacing: 0.1em; }
+.section-title { font-size: 2.5rem; text-align: center; }
+
+.lead {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+/* --- 5. BUTTONS --- */
 .cta-container {
     display: flex;
     gap: 20px;
     justify-content: center;
     width: 100%;
-    
-    /* Animation: Fade Up with 0.6s delay */
-    opacity: 0;
-    animation: fadeInUp 1s ease forwards 0.6s;
+    flex-wrap: wrap;
 }
 
 .cta-button {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
     padding: 15px 40px;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
     border-radius: 50px;
     font-size: 1.1rem;
@@ -149,27 +153,50 @@ body {
     box-shadow: 0 0 20px var(--primary);
 }
 
-/* --- 7. FOOTER --- */
+/* --- 6. FOOTER (FIXED) --- */
 .footer {
-    position: absolute;
-    bottom: 0;
+    /* Make sure footer sits at the bottom of the flow */
+    position: relative; 
     width: 100%;
-    padding: 30px 20px;
+    margin-top: auto; /* Pushes footer to bottom */
+    padding: 60px 20px 40px;
     background: linear-gradient(180deg, transparent 0%, #000 100%);
     text-align: center;
-    
-    /* Animation: Fade in last */
-    opacity: 0;
-    animation: fadeInUp 1s ease forwards 1s;
+    z-index: 20;
 }
 
-.footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; }
+.footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 25px; }
 .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; }
 .footer-links a:hover { color: var(--primary); }
-.footer-divider { width: 60px; height: 1px; background: rgba(255,255,255,0.2); margin: 15px auto; }
-.footer-copyright { color: rgba(255,255,255,0.5); font-size: 0.9rem; font-family: var(--font-heading); }
 
-/* --- 8. ANIMATIONS (Nebula + Stars) --- */
+/* Footer Social Icons */
+.footer-social { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+.footer-social a {
+    display: flex; align-items: center; justify-content: center;
+    width: 45px; height: 45px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+.footer-social a:hover { background: var(--primary); box-shadow: 0 0 15px var(--primary); border-color: var(--primary); }
+
+.footer-divider { width: 60px; height: 1px; background: rgba(255,255,255,0.2); margin: 0 auto 20px; }
+.footer-copyright { color: rgba(255,255,255,0.5); font-size: 0.9rem; font-family: var(--font-heading); line-height: 1.6; }
+.footer-copyright a { color: var(--secondary); text-decoration: none; }
+
+/* --- 7. GALLERY GRID --- */
+.gallery-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 20px; 
+    margin-top: 40px;
+}
+.big-folder { transition: all 0.3s ease; }
+.big-folder:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 0, 234, 0.3); }
+.affiliate-link-wrapper { text-decoration: none; display: block; }
+
+/* --- 8. ANIMATIONS --- */
 .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
 @keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
@@ -182,68 +209,28 @@ body {
 }
 
 .nebula-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(255, 0, 234, 0.05) 0%, transparent 50%);
-    filter: blur(60px);
-    animation: pulseNebula 10s infinite alternate;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
+    background: radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255, 0, 234, 0.05) 0%, transparent 50%);
+    filter: blur(60px); animation: pulseNebula 10s infinite alternate;
 }
-
-@keyframes pulseNebula {
-    0% { opacity: 0.6; transform: scale(1); }
-    100% { opacity: 1; transform: scale(1.1); }
-}
+@keyframes pulseNebula { 0% { opacity: 0.6; transform: scale(1); } 100% { opacity: 1; transform: scale(1.1); } }
 
 /* ========================================= */
-/* 📱 MOBILE FIX (Guaranteed Layout)         */
+/* 📱 MOBILE FIX                             */
 /* ========================================= */
 @media (max-width: 768px) {
-    
-    .main-wrapper {
-        justify-content: flex-start;
-        padding-top: 120px;
-        height: auto;
-    }
-
-    /* Force Header Logo Small on Mobile */
-    .logo-container {
-        position: absolute;
-        top: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-    
+    .logo-container { padding: 30px 0 0 0; display: flex; justify-content: center; }
     .logo img { width: 60px !important; height: 60px !important; }
     .logo-text-header { font-size: 1.4rem; }
 
-    .hero-content {
-        padding: 0 20px;
-        margin-top: 20px;
-    }
+    .hero-content { padding: 40px 20px; }
+    .center-logo-img { width: 60% !important; max-width: 250px !important; margin: 0 auto 20px; }
     
-    /* Force Center Logo Small on Mobile */
-    .center-logo-img { width: 60% !important; max-width: 250px !important; }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-        letter-spacing: 0.05em;
-        line-height: 1.5;
-    }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+    .big-folder img { height: 160px !important; } 
 
-    .cta-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-    
+    .cta-container { flex-direction: column; align-items: center; gap: 15px; }
     .cta-button { width: 80%; max-width: 280px; text-align: center; }
-
-    .footer { position: relative; margin-top: 60px; padding-bottom: 30px; }
+    
+    .footer { padding-bottom: 30px; }
 }
