@@ -14,14 +14,38 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    /* 2. MOUSE FOLLOWER */
+    /* 2. MOUSE FOLLOWER (Updated with Hover Effects) */
     const follower = document.getElementById('mouseFollower');
+    
+    // Check if device uses a fine pointer (mouse)
     if (window.matchMedia("(pointer: fine)").matches && follower) {
+        
+        // A. Movement Logic
         document.addEventListener('mousemove', (e) => {
             follower.style.left = e.clientX + 'px';
             follower.style.top = e.clientY + 'px';
         });
+
+        // B. Hover Interaction Logic (Added to restore full functionality)
+        // This makes the cursor grow when hovering over links, buttons, or gallery items
+        const interactables = document.querySelectorAll('a, button, input, textarea, .gallery-item');
+        
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                follower.style.transform = 'translate(-50%, -50%) scale(1.8)'; // Grow larger
+                follower.style.borderColor = '#ffffff'; // Turn white
+                follower.style.background = 'rgba(255, 255, 255, 0.1)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                follower.style.transform = 'translate(-50%, -50%) scale(1)'; // Return to normal
+                follower.style.borderColor = 'rgba(0, 234, 255, 0.8)'; // Return to Cyan
+                follower.style.background = 'rgba(208, 0, 255, 0.1)';
+            });
+        });
+
     } else if (follower) {
+        // Hide custom cursor on touch devices
         follower.style.display = 'none';
     }
 
