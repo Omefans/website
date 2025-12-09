@@ -418,3 +418,31 @@ body {
     .cta-container { flex-direction: column; align-items: center; }
     .cta-button { width: 80%; max-width: 280px; text-align: center; }
 }
+
+/* --- PAGINATION STYLES --- */
+.pagination-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    cursor: none; /* Keeps custom cursor logic */
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 15px var(--primary);
+    transform: translateY(-2px);
+}
+
+.pagination-btn.active {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 0, 234, 0.4);
+    font-weight: bold;
+}
