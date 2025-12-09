@@ -1,60 +1,63 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>NSFWFUN — Contact</title>
+<link rel="icon" type="image/png" href="images/logo.png">
 <link href="NSFWFUN-parallax-depth.css" rel="stylesheet">
 </head>
 <body>
 
-<header class="site-header">
-    <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
-        
-        <a class="logo" href="index.html" style="display: flex; align-items: center; gap: 15px;">
-            <img src="images/logo.png" alt="NF Logo" style="width: 70px; height: 70px; filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));">
-            <span style="font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 900; color: #fff;">NSFWFUN</span>
+    <div class="stars" id="stars"></div>
+
+    <div class="logo-container" style="top: 50px; left: 60px;">
+        <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px;"> 
+            <img src="images/logo.png" alt="NF Logo" style="width: 80px; height: 80px;">
+            <span class="logo-text-header" style="font-family: 'Orbitron', monospace; font-size: 1.5rem; font-weight: 900; color: #fff; white-space: nowrap;">NSFWFUN</span>
         </a>
+    </div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="gallery.html">Gallery</a>
-        </nav>
+    <main class="container" style="padding: 150px 20px 60px;">
+      <h1 class="section-title">Contact Us</h1>
+      <p style="text-align:center; opacity:.9">Use the form below to reach us.</p>
+
+      <p style="margin-top: 15px; margin-bottom: 25px; text-align: center;">
+        <a href="https://t.me/yourtelegramusername" target="_blank" style="display:inline-flex;align-items:center;padding:10px 18px;background:#0088cc;color:#fff;border-radius:8px;text-decoration:none;font-weight:700;margin-top:10px;">
+          <span style="font-size: 1.2rem; margin-right: 8px;">✈</span> @yourtelegramusername
+        </a>
+      </p>
+
+      <form action="https://formspree.io/f/FORM_ID" method="POST" style="max-width:700px; margin: 0 auto;">
+        <label for="name">Name</label><br>
+        <input id="name" name="name" class="form-input" required><br><br>
         
-    </div>
-</header>
-
-<main class="container" style="padding:40px 20px;">
-  <h1>Contact</h1>
-  <p style="opacity:.9">Use the form below to reach us. Replace FORM_ID with your Formspree ID if you want working email posts.</p>
-
-  <p style="margin-top: 15px; margin-bottom: 25px;">
-    **For quick support, connect with us on Telegram:**
-    <br>
-    <a href="https://t.me/yourtelegramusername" target="_blank" style="display:inline-flex;align-items:center;padding:10px 18px;background:#0088cc;color:#fff;border-radius:8px;text-decoration:none;font-weight:700;margin-top:10px;">
-      <span style="font-size: 1.2rem; margin-right: 8px;">✈</span> @yourtelegramusername
-    </a>
-  </p>
-
-  <form action="https://formspree.io/f/FORM_ID" method="POST" style="max-width:700px;margin-top:12px">
-    <label for="name">Name</label><br>
-    <input id="name" name="name" required style="width:100%;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.06);color:#fff"><br>
-    <label for="email" style="margin-top:8px">Email</label><br>
-    <input id="email" name="email" type="email" required style="width:100%;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.06);color:#fff"><br>
-    <label for="message" style="margin-top:8px">Message</label><br>
-    <textarea id="message" name="message" rows="6" required style="width:100%;padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.06);color:#fff"></textarea><br>
-    <button class="btn" type="submit" style="margin-top:12px;padding:10px 14px;border-radius:8px;background:#ff4fd8;border:0;color:#fff;font-weight:800">Send Message</button>
-  </form>
-</main>
-
-<footer class="footer" style="background: var(--dark); border-top: 1px solid rgba(255,255,255,0.1);">
-    <div class="footer-content" style="max-width: 1200px; margin: 0 auto; padding: 24px;">
-        <div class="footer-divider" style="width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); margin: 20px 0;"></div>
-        <div class="footer-copyright" style="text-align:center; color:rgba(255,255,255,0.6);">
-            <p>© 2026 NSFWFUN Media Experience. All rights reserved.</p>
-            <p>Design: <a href="https://t.me/nsfwfundotsite" target="_blank" rel="nofollow noopener" style="color:var(--primary); text-decoration:none;">NSFWFUN</a></p>
+        <label for="email">Email</label><br>
+        <input id="email" name="email" type="email" class="form-input" required><br><br>
+        
+        <label for="message">Message</label><br>
+        <textarea id="message" name="message" rows="6" class="form-input form-textarea" style="width:100%; padding:15px; background:rgba(255,255,255,0.05); border:2px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff;" required></textarea><br><br>
+        
+        <div style="text-align: center;">
+            <button class="submit-btn" type="submit" style="padding: 15px 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50px; color: #fff; font-weight: bold;">Send Message</button>
         </div>
-    </div>
-</footer>
+      </form>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="gallery.html" class="footer-link">Gallery</a>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-copyright">
+                <p>© 2026 NSFWFUN Media Experience. All rights reserved.</p>
+                <p>Design: <a href="https://t.me/nsfwfundotsite" target="_blank" rel="nofollow noopener">NSFWFUN</a></p>
+            </div>
+        </div>
+    </footer>
+    
 <script src="NSFWFUN-parallax-scripts.js"></script>
 </body>
 </html>
