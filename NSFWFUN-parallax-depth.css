@@ -22,7 +22,18 @@ body {
     min-height: 100vh;
 }
 
-/* --- 2. LAYOUT ENGINE --- */
+/* --- 2. ENTRANCE ANIMATIONS --- */
+@keyframes fadeZoomIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 3. LAYOUT ENGINE --- */
 .main-wrapper {
     position: relative;
     width: 100%;
@@ -34,12 +45,13 @@ body {
     z-index: 10;
 }
 
-/* --- 3. HEADER LOGO (FIXED) --- */
+/* --- 4. HEADER LOGO (FIXED SIZE) --- */
 .logo-container {
     position: absolute;
     top: 40px;
     left: 50px;
     z-index: 100;
+    animation: fadeZoomIn 1s ease forwards; /* Animate Header too */
 }
 
 .logo {
@@ -49,14 +61,12 @@ body {
     text-decoration: none;
 }
 
-/* Force Header Logo Size */
 .logo img {
-    width: 80px !important;
+    width: 80px !important;  /* Locked size for PC */
     height: 80px !important;
     filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));
 }
 
-/* Force Header Font */
 .logo-text-header {
     font-family: var(--font-display);
     font-size: 1.8rem;
@@ -67,7 +77,7 @@ body {
     text-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
 }
 
-/* --- 4. CENTER CONTENT --- */
+/* --- 5. CENTER CONTENT --- */
 .hero-content {
     text-align: center;
     width: 100%;
@@ -81,10 +91,13 @@ body {
 /* Big Center Logo */
 .center-logo-img {
     width: 100%;
-    max-width: 450px; 
+    max-width: 450px !important; /* Limit PC size */
     height: auto;
     filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.6));
     margin-bottom: 20px;
+    
+    /* Animation: Zoom In immediately */
+    animation: fadeZoomIn 1s ease forwards;
 }
 
 /* Main Title */
@@ -96,14 +109,22 @@ body {
     letter-spacing: 0.1em;
     margin-bottom: 40px;
     text-shadow: 0 0 15px var(--primary);
+    
+    /* Animation: Fade Up with 0.3s delay */
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards 0.3s;
 }
 
-/* --- 5. BUTTONS --- */
+/* --- 6. BUTTONS --- */
 .cta-container {
     display: flex;
     gap: 20px;
     justify-content: center;
     width: 100%;
+    
+    /* Animation: Fade Up with 0.6s delay */
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards 0.6s;
 }
 
 .cta-button {
@@ -128,7 +149,7 @@ body {
     box-shadow: 0 0 20px var(--primary);
 }
 
-/* --- 6. FOOTER --- */
+/* --- 7. FOOTER --- */
 .footer {
     position: absolute;
     bottom: 0;
@@ -136,6 +157,10 @@ body {
     padding: 30px 20px;
     background: linear-gradient(180deg, transparent 0%, #000 100%);
     text-align: center;
+    
+    /* Animation: Fade in last */
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards 1s;
 }
 
 .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; }
@@ -144,7 +169,7 @@ body {
 .footer-divider { width: 60px; height: 1px; background: rgba(255,255,255,0.2); margin: 15px auto; }
 .footer-copyright { color: rgba(255,255,255,0.5); font-size: 0.9rem; font-family: var(--font-heading); }
 
-/* --- 7. ANIMATIONS (Nebula + Stars) --- */
+/* --- 8. ANIMATIONS (Nebula + Stars) --- */
 .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
 @keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
@@ -156,7 +181,6 @@ body {
     transform: translate(-50%, -50%); 
 }
 
-/* Nebula Effect */
 .nebula-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -179,14 +203,13 @@ body {
 /* ========================================= */
 @media (max-width: 768px) {
     
-    /* 1. Reset Main Layout */
     .main-wrapper {
         justify-content: flex-start;
-        padding-top: 120px; /* Space for logo */
+        padding-top: 120px;
         height: auto;
     }
 
-    /* 2. Center Header Logo */
+    /* Force Header Logo Small on Mobile */
     .logo-container {
         position: absolute;
         top: 30px;
@@ -200,13 +223,13 @@ body {
     .logo img { width: 60px !important; height: 60px !important; }
     .logo-text-header { font-size: 1.4rem; }
 
-    /* 3. Center Content */
     .hero-content {
         padding: 0 20px;
         margin-top: 20px;
     }
     
-    .center-logo-img { max-width: 250px; } /* Smaller big logo */
+    /* Force Center Logo Small on Mobile */
+    .center-logo-img { width: 60% !important; max-width: 250px !important; }
     
     .hero-subtitle {
         font-size: 1rem;
@@ -214,7 +237,6 @@ body {
         line-height: 1.5;
     }
 
-    /* 4. Buttons Stacked */
     .cta-container {
         flex-direction: column;
         align-items: center;
@@ -223,6 +245,5 @@ body {
     
     .cta-button { width: 80%; max-width: 280px; text-align: center; }
 
-    /* 5. Footer Fix */
     .footer { position: relative; margin-top: 60px; padding-bottom: 30px; }
 }
