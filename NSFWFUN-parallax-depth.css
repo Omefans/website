@@ -2261,3 +2261,41 @@ html {
     max-width: 900px; 
 }
 /* ----------------------------------------------------------- */
+
+/* --- New CSS Mobile Fix Block --- */
+@media (max-width: 768px) {
+    /* Centering the entire logo container block */
+    .logo-container {
+        /* Override fixed positioning to allow for centering */
+        position: relative !important;
+        top: 20px !important; 
+        left: 50% !important; /* Move to center */
+        transform: translateX(-50%) !important; /* Correct centering */
+        opacity: 1 !important; /* Ensure visibility */
+        width: 100% !important; 
+        justify-content: center;
+        text-align: center;
+        
+        /* Ensure logo elements are centered within the container */
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Target the image element within the logo link */
+    .logo-container img {
+        width: 100px !important; /* FORCED LARGER MOBILE IMAGE SIZE */
+        height: 100px !important;
+    }
+
+    /* Target the text element within the logo link */
+    .logo-container .logo-text-header {
+        font-size: 1.8rem !important; /* Larger text size */
+    }
+
+    /* Ensure the main hero content is still centered properly below the logo */
+    .hero-content {
+        /* Adjust top position to account for the larger fixed header */
+        margin-top: 150px; 
+    }
+}
+/* --- End New CSS Mobile Fix Block --- */
