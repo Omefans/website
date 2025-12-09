@@ -1,5 +1,7 @@
 @charset "utf-8";
-/* NSFWFUN Main Stylesheet - FIXED HEADER SIZE */
+/* CSS Document */
+
+/* NSFWFUN Main Stylesheet */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -29,86 +31,8 @@ html { scroll-behavior: smooth; }
 ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
 ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--secondary)); border-radius: 10px; }
 
-/* --- HERO CONTAINER --- */
-.hero-container {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
-    /* Desktop: Use default block layout */
-    display: block; 
-}
-
-/* --- HEADER LOGO (Desktop) --- */
-.logo-container {
-    position: absolute;
-    top: 50px;
-    left: 60px;
-    z-index: 100;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-decoration: none;
-}
-
-/* Default PC Size */
-.logo img {
-    width: 80px; 
-    height: 80px; 
-    filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));
-}
-
-.logo-text-header {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: #fff;
-    white-space: nowrap;
-}
-
-/* --- CENTER CONTENT (Desktop) --- */
-.hero-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 10;
-    width: 100%;
-    max-width: 900px;
-    padding: 0 20px;
-}
-
-/* Big Center Logo */
-.center-logo-img {
-    max-width: 450px; 
-    height: auto; 
-    margin-bottom: 10px; 
-    filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.8));
-}
-
-/* Subtitle */
-.hero-subtitle {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: #fff;
-    margin-bottom: 40px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-}
-
-/* --- BUTTONS --- */
-.cta-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
-}
+/* --- BUTTON & LAYOUT STYLES --- */
+.cta-container { display: flex; gap: 20px; justify-content: center; width: 100%; }
 
 .cta-button {
 	display: inline-block;
@@ -127,13 +51,57 @@ html { scroll-behavior: smooth; }
 
 .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5); }
 
-/* --- BACKGROUND FX --- */
+/* Hero Content */
+.hero-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	z-index: 10;
+	color: var(--light);
+	opacity: 0;
+	animation: fadeInHero 1s ease forwards;
+	animation-delay: 0.3s;
+}
+
+@keyframes fadeInHero { from { opacity: 0; transform: translate(-50%, calc(-50% + 20px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+.hero-subtitle {
+	font-family: var(--font-heading);
+	font-size: clamp(1rem, 3vw, 1.5rem);
+	font-weight: 300;
+	opacity: 0.8;
+	margin-bottom: 40px;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+}
+
+/* Logo */
+.logo-container {
+	position: absolute;
+	top: 50px;
+	left: 60px;
+	z-index: 100;
+	opacity: 0;
+	animation: fadeInLogo 1s ease forwards;
+	animation-delay: 0.5s;
+}
+
+@keyframes fadeInLogo { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+.logo { display: flex; align-items: center; gap: 20px; text-decoration: none; transition: all 0.3s ease; }
+.logo-text-header { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; color: #fff; }
+
+/* Background Elements */
 .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
 .grid-diagonal-1, .grid-diagonal-2 { position: absolute; width: 200%; height: 200%; background-image: repeating-linear-gradient(45deg, transparent, transparent 180px, rgba(0, 217, 255, 0.08) 180px, rgba(0, 217, 255, 0.08) 183px); }
 .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 .mouse-follower { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 9999; transition: all 0.1s ease; transform: translate(-50%, -50%); }
 
-/* --- FOOTER --- */
+/* Footer Section */
 .footer { background: linear-gradient(180deg, var(--dark) 0%, #0a0a0f 100%); padding: 60px 5% 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; z-index: 20; }
 .footer-content { max-width: 1200px; margin: 0 auto; text-align: center; }
 .footer-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; flex-wrap: wrap; }
@@ -143,99 +111,92 @@ html { scroll-behavior: smooth; }
 .footer-copyright { color: rgba(255, 255, 255, 0.6); font-family: var(--font-heading); font-size: 0.9rem; }
 .footer-copyright a { color: var(--primary); text-decoration: none; }
 
-/* Contact Specifics */
-.form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; }
-.submit-btn { border:none; cursor: pointer; }
+/* Gallery Specifics */
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
 .big-folder:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 0, 234, 0.4); transition: all 0.3s ease; }
 .affiliate-link-wrapper { text-decoration: none; display: block; }
 
-/* --- SIMPLE LANDING OVERRIDE --- */
-.simple-landing-center {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 900px; 
-}
+/* Contact Specifics */
+.form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; }
+.submit-btn { border:none; cursor: pointer; }
+.info-icon.telegram { background: linear-gradient(135deg, #0088cc, #4ed6ff); }
 
-/* ========================================= */
-/* 📱 MOBILE RESPONSIVE ENGINE (FIXED)       */
-/* ========================================= */
+/* --- SIMPLE LANDING PAGE OVERRIDES --- */
+.simple-landing-center { position: relative !important; top: auto !important; left: auto !important; transform: none !important; margin: 0 auto; width: 100%; max-width: 900px; }
+
+/* ================================================================= */
+/* 📱 MOBILE FIXES - Only applies to screens smaller than 768px      */
+/* ================================================================= */
 
 @media (max-width: 768px) {
     
-    /* 1. FORCE FLEX LAYOUT FOR BODY */
-    .hero-container {
+    /* 1. FORCE HEADER LOGO TO CENTER */
+    .logo-container {
+        /* This overrides the inline 'left: 60px' */
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        
+        /* This overrides 'top: 50px' to pull it up slightly */
+        top: 25px !important;
+        
+        /* Flexbox magic to center content */
         display: flex !important;
-        flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
-        padding-top: 20px !important;
-    }
-
-    /* 2. HEADER LOGO - FORCED SMALLER */
-    .logo-container {
-        position: static !important; /* Stop floating */
-        margin-bottom: 30px !important;
-        width: auto !important;
-        display: flex !important;
-        justify-content: center !important;
+        
+        /* Stop it from being fixed if needed */
+        position: absolute !important;
+        text-align: center !important;
     }
     
-    /* The !important here overrides the inline HTML style */
+    /* Shrink the header logo image */
     .logo img {
-        width: 50px !important; 
+        width: 50px !important;
         height: 50px !important;
     }
     
     .logo-text-header {
-        font-size: 1.3rem !important;
+        font-size: 1.4rem !important;
     }
 
-    /* 3. CENTER CONTENT */
+    /* 2. CENTER CONTENT FIXES */
     .hero-content {
-        position: static !important;
-        transform: none !important;
-        width: 100% !important;
-        padding: 0 20px !important;
-        margin-bottom: 20px !important;
+        margin-top: 50px !important; /* Push down to clear header */
+        padding: 0 15px !important;
     }
 
-    /* 4. CENTER LOGO SCALING */
+    /* Shrink the Big Center Logo */
     .center-logo-img {
-        max-width: 60% !important; 
+        max-width: 60% !important;
         height: auto !important;
+        display: block !important;
         margin: 0 auto 10px auto !important;
-        display: block !important;
     }
 
-    /* 5. TITLE WRAPPING */
+    /* Fix Title Cut-off */
     .hero-subtitle {
-        font-size: 0.95rem !important;
-        letter-spacing: 0.1em !important;
-        white-space: normal !important;
-        line-height: 1.4 !important;
-        width: 95% !important;
-        margin: 0 auto 30px auto !important;
+        font-size: 0.9rem !important;
+        letter-spacing: 0.1em !important; /* Tighter letters */
+        white-space: normal !important;   /* Allow wrapping */
+        width: 100% !important;
         display: block !important;
+        margin-bottom: 30px !important;
     }
 
-    /* 6. BUTTONS STACKED */
+    /* 3. STACK BUTTONS VERTICALLY */
     .cta-container {
         flex-direction: column !important;
         align-items: center !important;
-        width: 100% !important;
         gap: 15px !important;
+        width: 100% !important;
     }
 
     .cta-button {
         width: 80% !important;
         max-width: 280px !important;
-        display: block !important;
         text-align: center !important;
-        padding: 12px 0 !important;
+        display: block !important;
+        margin: 0 auto !important;
     }
 }
