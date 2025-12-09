@@ -7,24 +7,26 @@
     --primary: #00d9ff;   /* Neon Cyan */
     --secondary: #ff00ea; /* Neon Pink */
     --dark: #0a0a0f;      /* Background */
+    --light: #ffffff;
     --font-display: 'Orbitron', monospace;
+    --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
 }
 
 body {
     font-family: var(--font-body);
     background: var(--dark);
-    color: #ffffff;
+    color: var(--light);
     overflow-x: hidden;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
 }
 
-/* --- 2. LAYOUT ENGINE (FLEXBOX) --- */
+/* --- 2. LAYOUT ENGINE --- */
 .main-wrapper {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,12 +34,12 @@ body {
     z-index: 10;
 }
 
-/* --- 3. HEADER --- */
-.header {
+/* --- 3. HEADER LOGO (FIXED) --- */
+.logo-container {
     position: absolute;
     top: 40px;
     left: 50px;
-    width: auto;
+    z-index: 100;
 }
 
 .logo {
@@ -47,21 +49,25 @@ body {
     text-decoration: none;
 }
 
+/* Force Header Logo Size */
 .logo img {
-    width: 70px;
-    height: 70px;
+    width: 80px !important;
+    height: 80px !important;
     filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));
 }
 
-.logo-text {
+/* Force Header Font */
+.logo-text-header {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 900;
     color: #fff;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
 }
 
-/* --- 4. CENTER HERO CONTENT --- */
+/* --- 4. CENTER CONTENT --- */
 .hero-content {
     text-align: center;
     width: 100%;
@@ -72,22 +78,24 @@ body {
     align-items: center;
 }
 
-.big-logo {
+/* Big Center Logo */
+.center-logo-img {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px; 
     height: auto;
     filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.6));
     margin-bottom: 20px;
 }
 
-.hero-title {
+/* Main Title */
+.hero-subtitle {
     font-family: var(--font-display);
     font-size: 1.5rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.1em;
     margin-bottom: 40px;
-    text-shadow: 0 0 10px var(--primary);
+    text-shadow: 0 0 15px var(--primary);
 }
 
 /* --- 5. BUTTONS --- */
@@ -108,7 +116,7 @@ body {
     font-weight: bold;
     white-space: nowrap;
     border: 1px solid rgba(255,255,255,0.2);
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cta-button.contact-btn {
@@ -123,74 +131,98 @@ body {
 /* --- 6. FOOTER --- */
 .footer {
     position: absolute;
-    bottom: 20px;
+    bottom: 0;
     width: 100%;
+    padding: 30px 20px;
+    background: linear-gradient(180deg, transparent 0%, #000 100%);
     text-align: center;
 }
 
-.footer-links a {
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-}
+.footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; }
+.footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; }
+.footer-links a:hover { color: var(--primary); }
+.footer-divider { width: 60px; height: 1px; background: rgba(255,255,255,0.2); margin: 15px auto; }
+.footer-copyright { color: rgba(255,255,255,0.5); font-size: 0.9rem; font-family: var(--font-heading); }
 
-.footer-divider {
-    width: 50px; height: 1px; background: rgba(255,255,255,0.2); margin: 15px auto;
-}
-
-.footer p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
-
-/* --- 7. ANIMATION BACKGROUND (NEW NEBULA) --- */
-.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-.star { position: absolute; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
-@keyframes twinkle { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
+/* --- 7. ANIMATIONS (Nebula + Stars) --- */
+.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
 .mouse-follower { 
     position: fixed; width: 20px; height: 20px; 
     border: 2px solid var(--primary); border-radius: 50%; 
-    pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); 
+    pointer-events: none; z-index: 9999; 
+    transform: translate(-50%, -50%); 
 }
 
-/* THE COSMIC FOG ANIMATION */
+/* Nebula Effect */
 .nebula-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1; /* Sits above stars but below content */
+    z-index: 1;
     pointer-events: none;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(255, 0, 234, 0.08) 0%, transparent 50%);
-    animation: pulseNebula 10s ease-in-out infinite alternate;
-    filter: blur(40px);
+        radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 234, 0.05) 0%, transparent 50%);
+    filter: blur(60px);
+    animation: pulseNebula 10s infinite alternate;
 }
 
 @keyframes pulseNebula {
-    0% { opacity: 0.5; transform: scale(1); }
-    100% { opacity: 0.8; transform: scale(1.1); }
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.1); }
 }
 
 /* ========================================= */
-/* 📱 MOBILE FIX                             */
+/* 📱 MOBILE FIX (Guaranteed Layout)         */
 /* ========================================= */
 @media (max-width: 768px) {
+    
+    /* 1. Reset Main Layout */
     .main-wrapper {
         justify-content: flex-start;
-        padding-top: 100px;
+        padding-top: 120px; /* Space for logo */
         height: auto;
-        min-height: 100vh;
     }
-    .header {
-        position: absolute; top: 20px; left: 50%;
-        transform: translateX(-50%); width: 100%;
-        display: flex; justify-content: center;
+
+    /* 2. Center Header Logo */
+    .logo-container {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
-    .logo img { width: 50px; height: 50px; }
-    .logo-text { font-size: 1.2rem; }
-    .hero-content { padding-top: 40px; }
-    .big-logo { max-width: 220px; }
-    .hero-title { font-size: 1rem; line-height: 1.5; max-width: 90%; }
-    .cta-container { flex-direction: column; align-items: center; gap: 15px; }
-    .cta-button { width: 80%; max-width: 250px; text-align: center; }
-    .footer { position: relative; margin-top: 50px; padding-bottom: 20px; bottom: auto; }
+    
+    .logo img { width: 60px !important; height: 60px !important; }
+    .logo-text-header { font-size: 1.4rem; }
+
+    /* 3. Center Content */
+    .hero-content {
+        padding: 0 20px;
+        margin-top: 20px;
+    }
+    
+    .center-logo-img { max-width: 250px; } /* Smaller big logo */
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+        line-height: 1.5;
+    }
+
+    /* 4. Buttons Stacked */
+    .cta-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .cta-button { width: 80%; max-width: 280px; text-align: center; }
+
+    /* 5. Footer Fix */
+    .footer { position: relative; margin-top: 60px; padding-bottom: 30px; }
 }
