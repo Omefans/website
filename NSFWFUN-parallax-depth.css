@@ -1,8 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 
-/* NSFWFUN Main Stylesheet */
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -19,7 +17,7 @@
 body {
 	font-family: var(--font-body);
 	background: var(--dark);
-    color: var(--light); /* FIXED: Ensures all text is white globally */
+    color: var(--light); /* <--- THIS WAS MISSING. IT MAKES TEXT WHITE. */
 	overflow-x: hidden;
 	cursor: crosshair;
 	font-weight: 300;
@@ -133,26 +131,17 @@ html { scroll-behavior: smooth; }
     
     /* 1. FORCE HEADER LOGO TO CENTER */
     .logo-container {
-        /* This overrides the inline 'left: 60px' */
         left: 50% !important;
         transform: translateX(-50%) !important;
         right: auto !important;
         width: 100% !important;
-        
-        /* This overrides 'top: 50px' to pull it up slightly */
         top: 25px !important;
-        
-        /* Flexbox magic to center content */
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
-        
-        /* Stop it from being fixed if needed */
-        position: absolute !important;
         text-align: center !important;
     }
     
-    /* Shrink the header logo image */
     .logo img {
         width: 50px !important;
         height: 50px !important;
@@ -164,18 +153,18 @@ html { scroll-behavior: smooth; }
 
     /* 2. CENTER CONTENT FIXES */
     .hero-content {
-        margin-top: 50px !important; /* Push down to clear header */
+        margin-top: 50px !important;
         padding: 0 15px !important;
         width: 100% !important;
         left: 0 !important;
         transform: none !important;
-        top: 20% !important; /* Adjust vertical position */
+        top: 20% !important; 
     }
 
-    /* Shrink the Big Center Logo to 60% of screen width */
+    /* Shrink the Big Center Logo */
     .center-logo-img {
         width: 60% !important; 
-        max-width: 250px !important; /* Strict limit */
+        max-width: 250px !important; 
         height: auto !important;
         display: block !important;
         margin: 0 auto 10px auto !important;
