@@ -1,248 +1,191 @@
-// JavaScript Document
+document.addEventListener("DOMContentLoaded", function() {
 
-/*
+    /* ========================================= */
+    /* 1. STAR BACKGROUND GENERATOR              */
+    /* ========================================= */
+    const starsContainer = document.getElementById('stars');
+    if (starsContainer) {
+        const numStars = 100;
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            starsContainer.appendChild(star);
+        }
+    }
 
-NSFWFUN 2144 NSFWFUN
+    /* ========================================= */
+    /* 2. MOUSE FOLLOWER (DESKTOP ONLY)          */
+    /* ========================================= */
+    const follower = document.getElementById('mouseFollower');
+    
+    // Only activate on devices with a fine pointer (Mouse) to save mobile battery
+    if (window.matchMedia("(pointer: fine)").matches && follower) {
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
 
-https://www.NSFWFUN.com/view/2144-NSFWFUN
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-*/
+        function animateFollower() {
+            // Smooth easing
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            
+            follower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+    } else if (follower) {
+        // Hide on mobile
+        follower.style.display = 'none';
+    }
 
-// Generate stars
-const starsContainer = document.getElementById('stars');
-const numStars = 100;
+    /* ========================================= */
+    /* 3. BUTTON RIPPLE EFFECT                   */
+    /* ========================================= */
+    // Adds the cool ripple to any button with class 'cta-button' or 'submit-btn'
+    const buttons = document.querySelectorAll('.cta-button, .submit-btn, .btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // Don't block links, just show effect
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.background = 'rgba(255, 255, 255, 0.4)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            
+            const rect = btn.getBoundingClientRect();
+            ripple.style.left = (e.clientX - rect.left) + 'px';
+            ripple.style.top = (e.clientY - rect.top) + 'px';
+            
+            btn.style.position = 'relative'; // Ensure button handles absolute child
+            btn.style.overflow = 'hidden';   // Clip the ripple
+            btn.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
 
-for (let i = 0; i < numStars; i++) {
-   const star = document.createElement('div');
-   star.className = 'star';
-   star.style.left = Math.random() * 100 + '%';
-   star.style.top = Math.random() * 100 + '%';
-   star.style.animationDelay = Math.random() * 3 + 's';
-   star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-   starsContainer.appendChild(star);
-}
+    // Inject Ripple Animation Style
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to { width: 300px; height: 300px; opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
 
-// NSFWFUN scrolling effect
-const layers = document.querySelectorAll('.NSFWFUN-layer');
-const heroContent = document.querySelector('.hero-content');
+    /* ========================================= */
+    /* 4. GALLERY PAGINATION SYSTEM              */
+    /* ========================================= */
+    // Only runs if the gallery container exists
+    const galleryContainer = document.getElementById('gallery-container');
+    const paginationContainer = document.getElementById('pagination-controls');
 
-window.addEventListener('scroll', () => {
-   const scrolled = window.pageYOffset;
+    if (galleryContainer && paginationContainer) {
+        const itemsPerPage = 10; // MAX ITEMS PER PAGE
+        const items = galleryContainer.querySelectorAll('.big-folder');
+        const totalPages = Math.ceil(items.length / itemsPerPage);
+        
+        if (totalPages > 1) {
+            let currentPage = 1;
 
-   // Move hero content
-   if (heroContent && scrolled < window.innerHeight) {
-      heroContent.style.transform = `translate(-50%, calc(-50% + ${scrolled * 0.3}px))`;
-      heroContent.style.opacity = 1 - (scrolled / 800);
-   }
+            function showPage(page) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                
+                items.forEach((item, index) => {
+                    if (index >= start && index < end) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                updateButtons(page);
+                // Scroll to top of gallery gently
+                const offsetTop = galleryContainer.offsetTop - 100;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            }
 
-   // Apply different speeds to each layer in hero section only
-   if (scrolled < window.innerHeight) {
-      layers.forEach((layer, index) => {
-         const speed = (index + 1) * 0.2;
-         layer.style.transform = `translateY(${scrolled * speed}px)`;
-      });
-   }
-});
+            function createButton(text, onClick, isActive = false) {
+                const btn = document.createElement('button');
+                btn.innerText = text;
+                btn.onclick = onClick;
+                btn.style.padding = '10px 15px';
+                btn.style.margin = '0 5px';
+                btn.style.background = isActive ? '#00d9ff' : 'rgba(255,255,255,0.1)';
+                btn.style.border = '1px solid ' + (isActive ? '#00d9ff' : 'rgba(255,255,255,0.2)');
+                btn.style.color = isActive ? '#000' : '#fff';
+                btn.style.borderRadius = '5px';
+                btn.style.cursor = 'pointer';
+                btn.style.fontWeight = 'bold';
+                return btn;
+            }
 
-// Mouse follower
-const mouseFollower = document.getElementById('mouseFollower');
-let mouseX = 0,
-   mouseY = 0;
-let followerX = 0,
-   followerY = 0;
-
-document.addEventListener('mousemove', (e) => {
-   mouseX = e.clientX;
-   mouseY = e.clientY;
-});
-
-// Smooth animation for mouse follower
-function animateFollower() {
-   followerX += (mouseX - followerX) * 0.1;
-   followerY += (mouseY - followerY) * 0.1;
-
-   mouseFollower.style.left = followerX + 'px';
-   mouseFollower.style.top = followerY + 'px';
-
-   requestAnimationFrame(animateFollower);
-}
-animateFollower();
-
-// Interactive hover effects for rectangles
-const rectangles = document.querySelectorAll('.rect');
-
-rectangles.forEach(rect => {
-   rect.addEventListener('mousemove', (e) => {
-      const boundingRect = rect.getBoundingClientRect();
-      const x = e.clientX - boundingRect.left;
-      const y = e.clientY - boundingRect.top;
-
-      const centerX = boundingRect.width / 2;
-      const centerY = boundingRect.height / 2;
-
-      const rotateX = (y - centerY) / 15;
-      const rotateY = (centerX - x) / 15;
-
-      rect.style.transform = `perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-   });
-
-   rect.addEventListener('mouseleave', () => {
-      rect.style.transform = '';
-   });
-});
-
-// 3D Carousel Controls
-const carousel = document.getElementById('carousel');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const indicatorsContainer = document.getElementById('indicators');
-const featureCards = document.querySelectorAll('.feature-card-3d');
-
-let currentRotation = 0;
-let currentIndex = 0;
-
-// Create indicators
-featureCards.forEach((_, index) => {
-   const indicator = document.createElement('div');
-   indicator.className = 'indicator';
-   if (index === 0) indicator.classList.add('active');
-   indicator.addEventListener('click', () => goToSlide(index));
-   indicatorsContainer.appendChild(indicator);
-});
-
-const indicators = document.querySelectorAll('.indicator');
-
-// Update view - always use 3D rotation
-function updateView() {
-   carousel.style.transform = `rotateY(${currentRotation}deg)`;
-   updateIndicators();
-}
-
-// Update indicators
-function updateIndicators() {
-   indicators.forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === currentIndex);
-   });
-}
-
-// Go to specific slide
-function goToSlide(index) {
-   currentIndex = index;
-   currentRotation = -index * 60;
-   updateView();
-}
-
-// Previous button
-prevBtn.addEventListener('click', () => {
-   currentIndex = (currentIndex - 1 + featureCards.length) % featureCards.length;
-   currentRotation += 60;
-   updateView();
-});
-
-// Next button
-nextBtn.addEventListener('click', () => {
-   currentIndex = (currentIndex + 1) % featureCards.length;
-   currentRotation -= 60;
-   updateView();
-});
-
-// Touch support for mobile
-let touchStartX = 0;
-let touchEndX = 0;
-
-carousel.addEventListener('touchstart', (e) => {
-   touchStartX = e.changedTouches[0].screenX;
-});
-
-carousel.addEventListener('touchend', (e) => {
-   touchEndX = e.changedTouches[0].screenX;
-   handleSwipe();
-});
-
-function handleSwipe() {
-   if (touchEndX < touchStartX - 50) {
-      // Swipe left - next
-      nextBtn.click();
-   }
-   if (touchEndX > touchStartX + 50) {
-      // Swipe right - previous
-      prevBtn.click();
-   }
-}
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-   anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-         target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-         });
-      }
-   });
-});
-
-// Intersection Observer for fade-in animations
-const observerOptions = {
-   threshold: 0.1,
-   rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-   entries.forEach(entry => {
-      if (entry.isIntersecting) {
-         entry.target.style.opacity = '1';
-         entry.target.style.transform = 'translateY(0)';
-      }
-   });
-}, observerOptions);
-
-// Observe feature cards and gallery items
-document.querySelectorAll('.gallery-item').forEach(item => {
-   item.style.opacity = '0';
-   item.style.transform = 'translateY(30px)';
-   item.style.transition = 'all 0.6s ease';
-   observer.observe(item);
-});
-
-// Form submission effect
-const submitBtn = document.querySelector('.submit-btn');
-if (submitBtn) {
-   submitBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      // Create ripple effect
-      const ripple = document.createElement('span');
-      ripple.style.position = 'absolute';
-      ripple.style.width = '10px';
-      ripple.style.height = '10px';
-      ripple.style.background = 'rgba(255, 255, 255, 0.5)';
-      ripple.style.borderRadius = '50%';
-      ripple.style.transform = 'translate(-50%, -50%)';
-      ripple.style.pointerEvents = 'none';
-      ripple.style.animation = 'ripple 0.6s ease-out';
-
-      const rect = submitBtn.getBoundingClientRect();
-      ripple.style.left = (e.clientX - rect.left) + 'px';
-      ripple.style.top = (e.clientY - rect.top) + 'px';
-
-      submitBtn.appendChild(ripple);
-
-      setTimeout(() => ripple.remove(), 600);
-   });
-}
-
-// Add ripple animation
-const style = document.createElement('style');
-style.textContent = `
-            @keyframes ripple {
-                to {
-                    width: 300px;
-                    height: 300px;
-                    opacity: 0;
+            function updateButtons(activePage) {
+                paginationContainer.innerHTML = '';
+                
+                // Previous
+                if (activePage > 1) {
+                    paginationContainer.appendChild(createButton('← Prev', () => { 
+                        currentPage--; showPage(currentPage); 
+                    }));
+                }
+                
+                // Pages
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationContainer.appendChild(createButton(i, () => { 
+                        currentPage = i; showPage(currentPage); 
+                    }, i === activePage));
+                }
+                
+                // Next
+                if (activePage < totalPages) {
+                    paginationContainer.appendChild(createButton('Next →', () => { 
+                        currentPage++; showPage(currentPage); 
+                    }));
                 }
             }
-        `;
-document.head.appendChild(style);
+
+            // Initialize Gallery
+            showPage(1);
+        } else {
+            // If less than 10 items, just show them all and hide controls
+            paginationContainer.style.display = 'none';
+        }
+    }
+
+    /* ========================================= */
+    /* 5. FADE IN ANIMATION FOR SCROLLING        */
+    /* ========================================= */
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.gallery-grid article, .video-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = 'all 0.6s ease';
+        observer.observe(item);
+    });
+
+});
