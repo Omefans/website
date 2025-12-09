@@ -14,23 +14,26 @@
     <div class="mouse-follower" id="mouseFollower"></div>
     <div class="stars" id="stars"></div>
 
-    <div class="hero-container" id="hero">
+    <div class="hero-container" id="hero" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
         
         <div class="grid-overlay">
             <div class="grid-diagonal-1"></div>
             <div class="grid-diagonal-2"></div>
         </div>
 
-        <div class="logo-container">
-            <a href="index.html" class="logo"> 
+        <div class="logo-container" style="top: 50px; left: 60px;">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px;"> 
                 <img src="images/logo.png" alt="NF Logo" style="width: 80px; height: 80px;">
-                <span class="logo-text-header">NSFWFUN</span>
+                <span class="logo-text-header" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; color: #fff; white-space: nowrap;">NSFWFUN</span>
             </a>
         </div>
         
-        <div class="hero-content simple-landing-center">
-            <img class="center-logo-img" src="images/logo.png" alt="NF Logo">
-            <p class="hero-subtitle">Your Ultimate Content Destination</p>
+        <div class="hero-content simple-landing-center" style="opacity: 1; text-align: center; width: 100%; padding: 0 20px;">
+            
+            <img class="center-logo-img" src="images/logo.png" alt="NF Logo" style="max-width: 450px; height: auto; margin-bottom: 10px; filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.8));">
+            
+            <p class="hero-subtitle" style="margin-top: 10px; margin-bottom: 30px;">Your Ultimate Content Destination</p>
+            
             <div class="cta-container">
                 <a href="gallery.html" class="cta-button">Explore Gallery</a>
                 <a href="contact.html" class="cta-button" style="background: linear-gradient(135deg, var(--secondary), var(--primary));">Contact Us</a>
