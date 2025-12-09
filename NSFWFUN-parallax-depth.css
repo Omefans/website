@@ -206,27 +206,24 @@ html {
 }
 
 /* ========================================= */
-/* MOBILE RESPONSIVE FIXES (FINAL V3)    */
+/* MOBILE RESPONSIVE FIXES (FINAL V4)        */
 /* ========================================= */
 
 @media (max-width: 768px) {
     
-    /* --- 1. HEADER LOGO CENTERING (FAIL-SAFE) --- */
+    /* 1. HEADER LOGO CENTERING - ABSOLUTE CENTER */
     .logo-container {
-        /* Instead of moving it to the middle, we stretch it across the whole screen */
         position: absolute !important;
         top: 30px !important;
         left: 0 !important;
-        width: 100% !important; /* SPAN FULL WIDTH */
+        width: 100% !important; /* Full width so centering works */
         display: flex !important;
-        justify-content: center !important; /* CENTER CONTENT */
+        justify-content: center !important; /* Horizontally center */
         align-items: center !important;
-        transform: none !important;
         padding: 0 !important;
         margin: 0 !important;
     }
     
-    /* Ensure the link inside allows centering */
     .logo {
         display: flex !important;
         align-items: center !important;
@@ -234,22 +231,20 @@ html {
         width: auto !important;
     }
 
-    /* Header Image Size on Mobile */
     .logo-container img {
-        width: 60px !important;
-        height: 60px !important;
+        width: 50px !important; /* Reduced header logo size */
+        height: 50px !important;
     }
     
-    /* Header Text Size on Mobile */
     .logo-container .logo-text-header {
-        font-size: 1.5rem !important;
+        font-size: 1.4rem !important;
     }
 
 
-    /* --- 2. MAIN CONTENT CENTERING --- */
+    /* 2. MAIN CONTENT CENTERING & LAYOUT */
     .hero-content {
         position: absolute !important;
-        top: 60% !important; /* Push down to clear header */
+        top: 55% !important;
         left: 50% !important; 
         transform: translate(-50%, -50%) !important;
         width: 100% !important;
@@ -261,23 +256,26 @@ html {
         text-align: center !important;
     }
 
-    /* Center Logo (Big One) */
+    /* Center Logo (Big One) - REDUCED SIZE */
     .center-logo-img {
-        max-width: 80% !important;
+        max-width: 50% !important; /* Shrunk from 80% to 50% based on screenshot */
         height: auto !important;
-        margin: 0 auto 10px auto !important;
+        margin: 0 auto 15px auto !important;
         display: block !important;
     }
 
-    /* Subtitle Text */
+    /* Subtitle Text - FIX CUT OFF */
     .hero-subtitle {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important; 
+        letter-spacing: 0.1em !important; /* Reduced spacing prevents cut-off */
+        line-height: 1.4 !important;
+        white-space: normal !important; /* Forces text to wrap if needed */
+        width: 90% !important;
+        margin: 0 auto 25px auto !important;
         display: block !important;
-        width: 100% !important;
-        margin: 0 auto 30px auto !important;
     }
 
-    /* --- 3. BUTTONS STACKED --- */
+    /* 3. BUTTONS */
     .cta-container {
         flex-direction: column !important;
         align-items: center !important;
@@ -286,10 +284,12 @@ html {
     }
 
     .cta-button {
-        width: 100% !important;
+        width: 70% !important;
         max-width: 280px !important;
         display: block !important;
         text-align: center !important;
         margin: 0 auto !important;
+        font-size: 1rem !important;
+        padding: 12px 30px !important;
     }
 }
