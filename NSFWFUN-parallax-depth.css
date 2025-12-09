@@ -2447,4 +2447,24 @@ html {
     width: 100%;
     max-width: 900px; 
 }
+
+/* --- NEW MOBILE FIX: For very small screens (around 480px or less) --- */
+@media (max-width: 480px) {
+    /* Adjustments for the logo wrapper on mobile */
+    .logo-container {
+        top: 20px !important; 
+        left: 20px !important;
+    }
+    
+    /* Adjustments for the logo image on mobile */
+    .logo a.logo img {
+        width: 80px !important; /* Smaller image width */
+        height: 80px !important; /* Smaller image height */
+    }
+    
+    /* Adjustments for the accompanying text on mobile */
+    .logo a.logo .logo-text-header {
+        font-size: 1.2rem !important;
+    }
+}
 /* ----------------------------------------------------------- */
