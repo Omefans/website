@@ -1,6 +1,6 @@
 @charset "utf-8";
-/* NSFWFUN Main Stylesheet - RECODED CLEAN */
 
+/* --- RESET & BASICS --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -8,111 +8,122 @@
 	--secondary: #ff00ea;
 	--dark: #0a0a0f;
 	--light: #ffffff;
-	--font-display: 'Orbitron', monospace;
-	--font-heading: 'Space Grotesk', sans-serif;
-	--font-body: 'Inter', sans-serif;
+    --font-display: 'Orbitron', monospace;
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 body {
 	font-family: var(--font-body);
 	background: var(--dark);
-	overflow-x: hidden;
-	width: 100%;
-    min-height: 100vh;
-}
-
-/* --- 1. HERO CONTAINER (THE PARENT) --- */
-/* This is the magic. We make the whole screen a Flexbox. */
-.hero-container {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    display: flex;              /* Turn on Flexbox */
-    justify-content: center;    /* Center Horizontally */
-    align-items: center;        /* Center Vertically */
+    /* Radial Gradient Background */
     background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
-    overflow: hidden;
+	overflow-x: hidden;
+    min-height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- 2. HEADER LOGO (Top Left) --- */
-.logo-container {
-    position: absolute; /* Takes it out of the flex flow */
+/* --- BACKGROUND FX (Kept intact) --- */
+.mouse-follower { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 9999; transition: all 0.1s ease; transform: translate(-50%, -50%); }
+.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.grid-diagonal-1, .grid-diagonal-2 { position: absolute; width: 200%; height: 200%; background-image: repeating-linear-gradient(45deg, transparent, transparent 180px, rgba(0, 217, 255, 0.08) 180px, rgba(0, 217, 255, 0.08) 183px); }
+
+/* --- MAIN WRAPPER --- */
+/* This fills the screen and centers everything inside it */
+.main-wrapper {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertical Center */
+    align-items: center;     /* Horizontal Center */
+}
+
+/* --- HEADER (Desktop Default) --- */
+.top-header {
+    position: absolute; /* Pinned to corner on Desktop */
     top: 40px;
     left: 50px;
-    z-index: 100;
+    width: auto;
 }
 
-.logo {
+.header-link {
     display: flex;
     align-items: center;
     gap: 15px;
     text-decoration: none;
+    color: #fff;
 }
 
-.logo img {
-    width: 70px;
-    height: 70px;
+.header-link img {
+    width: 80px;
+    height: 80px;
     filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));
 }
 
-.logo-text-header {
+.header-link span {
     font-family: var(--font-display);
     font-size: 1.8rem;
     font-weight: 900;
-    color: #fff;
     letter-spacing: 0.05em;
 }
 
-/* --- 3. CENTER CONTENT (The Middle Box) --- */
-.hero-content {
-    z-index: 10;
+/* --- CENTER CONTENT --- */
+.center-content {
     text-align: center;
-    width: 100%;
-    max-width: 900px;
     padding: 20px;
-    /* No positioning needed here, the parent flex container handles it */
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Center Logo Size (PC Default) */
-.center-logo-img {
-    max-width: 400px;
+.big-logo {
+    max-width: 450px;
     width: 100%;
     height: auto;
-    margin-bottom: 5px;
     filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.8));
+    margin-bottom: 5px; /* Tight spacing to subtitle */
 }
 
-.hero-subtitle {
+.subtitle {
     font-family: var(--font-heading);
     font-size: 1.2rem;
     font-weight: 300;
-    color: #fff;
-    margin-bottom: 35px;
-    letter-spacing: 0.3em;
     text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 35px;
+    color: rgba(255,255,255,0.9);
 }
 
-/* --- 4. BUTTONS --- */
-.cta-container {
+/* --- BUTTONS --- */
+.buttons-row {
     display: flex;
-    justify-content: center;
     gap: 20px;
+    justify-content: center;
+    width: 100%;
 }
 
 .cta-button {
     display: inline-block;
     padding: 15px 40px;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: var(--light);
+    color: #fff;
     text-decoration: none;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
+    transition: transform 0.2s;
 }
 
-.cta-button.contact-btn {
+.cta-button.contact {
     background: linear-gradient(135deg, var(--secondary), var(--primary));
 }
 
@@ -121,87 +132,80 @@ body {
     box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
 }
 
-/* --- BACKGROUND FX --- */
-.grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
-.grid-diagonal-1, .grid-diagonal-2 { position: absolute; width: 200%; height: 200%; background-image: repeating-linear-gradient(45deg, transparent, transparent 180px, rgba(0, 217, 255, 0.08) 180px, rgba(0, 217, 255, 0.08) 183px); }
-.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-.star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
-@keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-.mouse-follower { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 9999; transition: all 0.1s ease; transform: translate(-50%, -50%); }
-
 /* --- FOOTER --- */
-.footer { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(180deg, transparent 0%, #0a0a0f 100%); padding: 30px 20px; z-index: 20; }
-.footer-content { max-width: 1200px; margin: 0 auto; text-align: center; }
-.footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
-.footer-link { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-family: var(--font-heading); font-size: 0.9rem; transition: color 0.3s ease; }
-.footer-link:hover { color: var(--primary); }
-.footer-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 20px auto; }
-.footer-copyright { color: rgba(255, 255, 255, 0.5); font-family: var(--font-heading); font-size: 0.8rem; }
-.footer-copyright a { color: var(--primary); text-decoration: none; }
+.bottom-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+}
 
-/* Contact/Gallery Specifics (Kept simple) */
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
-.form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; margin-bottom: 15px;}
-.submit-btn { border:none; cursor: pointer; color: white; background: var(--primary); padding: 10px 20px; border-radius: 5px;}
+.footer-links { margin-bottom: 15px; }
+.footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 15px; font-weight: bold; }
+.bottom-footer p { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 5px; }
+.bottom-footer a { color: var(--primary); text-decoration: none; }
 
 /* ========================================= */
-/* 📱 MOBILE RESPONSIVE ENGINE (Nuclear Option) */
+/* 📱 MOBILE FIX (Guaranteed Centering)      */
 /* ========================================= */
 
 @media (max-width: 768px) {
     
-    /* 1. HEADER LOGO: Move from Top-Left to Top-Center */
-    .logo-container {
-        top: 25px;       /* Spacing from top */
-        left: 50%;       /* Move to middle of screen */
-        transform: translateX(-50%); /* PERFECTLY CENTER IT */
-        width: 100%;     /* Full width container */
+    /* 1. UN-PIN THE HEADER */
+    /* This moves the header from the corner into the center stack */
+    .top-header {
+        position: relative; /* No longer absolute */
+        top: auto;
+        left: auto;
+        margin-top: 30px;
+        margin-bottom: 20px;
         display: flex;
         justify-content: center;
     }
 
-    .logo img {
-        width: 50px;     /* Smaller icon for mobile */
-        height: 50px;
+    /* Resize Header Logo for Mobile */
+    .header-link img { width: 50px; height: 50px; }
+    .header-link span { font-size: 1.4rem; }
+
+    /* 2. ADJUST CENTER CONTENT */
+    .center-content {
+        padding-top: 0; /* Remove top padding since header is now above it */
+        justify-content: center;
     }
 
-    .logo-text-header {
-        font-size: 1.4rem; /* Smaller text for mobile */
+    /* Resize Big Logo */
+    .big-logo {
+        max-width: 70%; /* Smaller on phone */
+        margin-bottom: 10px;
     }
 
-    /* 2. CENTER CONTENT: Adjust size and spacing */
-    .hero-content {
-        margin-top: 40px; /* Push down slightly to clear the header */
-    }
-
-    .center-logo-img {
-        max-width: 60%; /* Shrink center logo */
-    }
-
-    .hero-subtitle {
-        font-size: 0.9rem;       /* Smaller font */
-        letter-spacing: 0.1em;   /* Reduced spacing */
+    /* Fix Subtitle Cut-off */
+    .subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.05em; /* Tighter letters fit better */
         line-height: 1.4;
-        width: 90%;              /* Prevent edge touching */
-        margin: 0 auto 25px auto;
+        width: 90%;
+        margin-bottom: 25px;
     }
 
-    /* 3. BUTTONS: Stack them */
-    .cta-container {
+    /* 3. STACK BUTTONS */
+    .buttons-row {
         flex-direction: column;
         align-items: center;
         gap: 15px;
     }
 
     .cta-button {
-        width: 70%;
+        width: 80%;
         max-width: 280px;
         text-align: center;
     }
-    
-    /* 4. FOOTER: Ensure it doesn't overlap on small screens */
-    .footer {
-        position: relative; /* Stop being sticky if screen is short */
-        margin-top: 50px;
+
+    /* 4. FOOTER ADJUSTMENT */
+    .bottom-footer {
+        position: relative; /* Let it sit naturally at bottom of scroll */
+        margin-top: 40px;
     }
 }
