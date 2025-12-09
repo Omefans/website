@@ -147,6 +147,11 @@ body {
 .bottom-footer p { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 5px; }
 .bottom-footer a { color: var(--primary); text-decoration: none; }
 
+/* Contact/Gallery Specifics (Kept simple) */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; margin-bottom: 15px;}
+.submit-btn { border:none; cursor: pointer; color: white; background: var(--primary); padding: 10px 20px; border-radius: 5px;}
+
 /* ========================================= */
 /* 📱 MOBILE FIX (Guaranteed Centering)      */
 /* ========================================= */
