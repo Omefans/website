@@ -1,12 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    /* ========================================= */
-    /* 1. STAR BACKGROUND GENERATOR              */
-    /* ========================================= */
+    /* 1. STARS */
     const starsContainer = document.getElementById('stars');
     if (starsContainer) {
-        const numStars = 100;
-        for (let i = 0; i < numStars; i++) {
+        for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             star.style.left = Math.random() * 100 + '%';
@@ -17,176 +14,73 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    /* ========================================= */
-    /* 2. MOUSE FOLLOWER (DESKTOP ONLY)          */
-    /* ========================================= */
+    /* 2. MOUSE FOLLOWER (Desktop) */
     const follower = document.getElementById('mouseFollower');
-    
-    // Only activate on devices with a fine pointer (Mouse) to save mobile battery
     if (window.matchMedia("(pointer: fine)").matches && follower) {
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateFollower() {
-            // Smooth easing
-            followerX += (mouseX - followerX) * 0.1;
-            followerY += (mouseY - followerY) * 0.1;
-            
-            follower.style.transform = `translate(${followerX}px, ${followerY}px)`;
-            requestAnimationFrame(animateFollower);
+        let x = 0, y = 0, fx = 0, fy = 0;
+        document.addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; });
+        function animate() {
+            fx += (x - fx) * 0.1; fy += (y - fy) * 0.1;
+            follower.style.transform = `translate(${fx}px, ${fy}px)`;
+            requestAnimationFrame(animate);
         }
-        animateFollower();
-    } else if (follower) {
-        // Hide on mobile
-        follower.style.display = 'none';
-    }
+        animate();
+    } else if (follower) { follower.style.display = 'none'; }
 
-    /* ========================================= */
-    /* 3. BUTTON RIPPLE EFFECT                   */
-    /* ========================================= */
-    // Adds the cool ripple to any button with class 'cta-button' or 'submit-btn'
-    const buttons = document.querySelectorAll('.cta-button, .submit-btn, .btn');
-    
+    /* 3. BUTTON RIPPLE */
+    const buttons = document.querySelectorAll('.cta-button');
     buttons.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            // Don't block links, just show effect
             const ripple = document.createElement('span');
-            ripple.style.position = 'absolute';
-            ripple.style.width = '20px';
-            ripple.style.height = '20px';
-            ripple.style.background = 'rgba(255, 255, 255, 0.4)';
-            ripple.style.borderRadius = '50%';
-            ripple.style.transform = 'translate(-50%, -50%)';
-            ripple.style.pointerEvents = 'none';
-            ripple.style.animation = 'ripple 0.6s ease-out';
-            
             const rect = btn.getBoundingClientRect();
             ripple.style.left = (e.clientX - rect.left) + 'px';
             ripple.style.top = (e.clientY - rect.top) + 'px';
-            
-            btn.style.position = 'relative'; // Ensure button handles absolute child
-            btn.style.overflow = 'hidden';   // Clip the ripple
+            ripple.style.position = 'absolute';
+            ripple.style.width = '20px'; ripple.style.height = '20px';
+            ripple.style.background = 'rgba(255, 255, 255, 0.4)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            btn.style.position = 'relative'; btn.style.overflow = 'hidden';
             btn.appendChild(ripple);
-            
             setTimeout(() => ripple.remove(), 600);
         });
     });
-
-    // Inject Ripple Animation Style
     const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ripple {
-            to { width: 300px; height: 300px; opacity: 0; }
-        }
-    `;
+    style.textContent = `@keyframes ripple { to { width: 300px; height: 300px; opacity: 0; } }`;
     document.head.appendChild(style);
 
-    /* ========================================= */
-    /* 4. GALLERY PAGINATION SYSTEM              */
-    /* ========================================= */
-    // Only runs if the gallery container exists
-    const galleryContainer = document.getElementById('gallery-container');
-    const paginationContainer = document.getElementById('pagination-controls');
-
-    if (galleryContainer && paginationContainer) {
-        const itemsPerPage = 9; // MAX ITEMS PER PAGE
-        const items = galleryContainer.querySelectorAll('.big-folder');
-        const totalPages = Math.ceil(items.length / itemsPerPage);
+    /* 4. PAGINATION */
+    const gallery = document.getElementById('gallery-container');
+    const controls = document.getElementById('pagination-controls');
+    
+    if (gallery && controls) {
+        const limit = 10; 
+        const items = gallery.querySelectorAll('.big-folder');
+        const pages = Math.ceil(items.length / limit);
         
-        if (totalPages > 1) {
-            let currentPage = 1;
-
-            function showPage(page) {
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                
-                items.forEach((item, index) => {
-                    if (index >= start && index < end) {
-                        item.style.display = 'block';
-                        item.style.animation = 'fadeIn 0.5s ease';
-                    } else {
-                        item.style.display = 'none';
-                    }
+        if (pages > 1) {
+            let curr = 1;
+            function render(p) {
+                items.forEach((item, i) => {
+                    item.style.display = (i >= (p-1)*limit && i < p*limit) ? 'block' : 'none';
                 });
-                
-                updateButtons(page);
-                // Scroll to top of gallery gently
-                const offsetTop = galleryContainer.offsetTop - 100;
-                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-            }
-
-            function createButton(text, onClick, isActive = false) {
-                const btn = document.createElement('button');
-                btn.innerText = text;
-                btn.onclick = onClick;
-                btn.style.padding = '10px 15px';
-                btn.style.margin = '0 5px';
-                btn.style.background = isActive ? '#00d9ff' : 'rgba(255,255,255,0.1)';
-                btn.style.border = '1px solid ' + (isActive ? '#00d9ff' : 'rgba(255,255,255,0.2)');
-                btn.style.color = isActive ? '#000' : '#fff';
-                btn.style.borderRadius = '5px';
-                btn.style.cursor = 'pointer';
-                btn.style.fontWeight = 'bold';
-                return btn;
-            }
-
-            function updateButtons(activePage) {
-                paginationContainer.innerHTML = '';
-                
-                // Previous
-                if (activePage > 1) {
-                    paginationContainer.appendChild(createButton('← Prev', () => { 
-                        currentPage--; showPage(currentPage); 
-                    }));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                controls.innerHTML = '';
+                if(curr > 1) {
+                    const prev = document.createElement('button');
+                    prev.innerText = '←'; prev.className = 'cta-button'; prev.style.padding = '10px 20px';
+                    prev.onclick = () => { curr--; render(curr); };
+                    controls.appendChild(prev);
                 }
-                
-                // Pages
-                for (let i = 1; i <= totalPages; i++) {
-                    paginationContainer.appendChild(createButton(i, () => { 
-                        currentPage = i; showPage(currentPage); 
-                    }, i === activePage));
-                }
-                
-                // Next
-                if (activePage < totalPages) {
-                    paginationContainer.appendChild(createButton('Next →', () => { 
-                        currentPage++; showPage(currentPage); 
-                    }));
+                if(curr < pages) {
+                    const next = document.createElement('button');
+                    next.innerText = '→'; next.className = 'cta-button'; next.style.padding = '10px 20px';
+                    next.onclick = () => { curr++; render(curr); };
+                    controls.appendChild(next);
                 }
             }
-
-            // Initialize Gallery
-            showPage(1);
-        } else {
-            // If less than 10 items, just show them all and hide controls
-            paginationContainer.style.display = 'none';
-        }
+            render(1);
+        } else { controls.style.display = 'none'; }
     }
-
-    /* ========================================= */
-    /* 5. FADE IN ANIMATION FOR SCROLLING        */
-    /* ========================================= */
-    const observerOptions = { threshold: 0.1 };
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.gallery-grid article, .video-item').forEach(item => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(30px)';
-        item.style.transition = 'all 0.6s ease';
-        observer.observe(item);
-    });
-
 });
-
