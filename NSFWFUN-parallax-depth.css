@@ -2435,3 +2435,18 @@ html {
 	}
 
 }
+
+/* --- NEW CSS for Simple Landing Page Centering Override --- */
+.simple-landing-center {
+    /* Override position absolute and transform to allow flexbox centering */
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    
+    /* Ensure the content itself is a block and centered */
+    margin: 0 auto;
+    width: 100%;
+    max-width: 900px; /* Adjust as needed */
+}
+/* ----------------------------------------------------------- */
