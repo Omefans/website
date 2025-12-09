@@ -200,3 +200,18 @@ html { scroll-behavior: smooth; }
         margin: 0 auto !important;
     }
 }
+
+/* ========================================= */
+/* 📱 MOBILE CENTER LOGO FIX (ONLY THIS)    */
+/* ========================================= */
+
+@media (max-width: 768px) {
+    .center-logo-img {
+        display: block !important;       /* Make it a block to allow centering */
+        margin-left: auto !important;    /* Pushes from left */
+        margin-right: auto !important;   /* Pushes from right */
+        max-width: 60% !important;       /* Ensures it fits on screen */
+        height: auto !important;         /* Maintains aspect ratio */
+        margin-bottom: 15px !important;  /* Adds space below */
+    }
+}
