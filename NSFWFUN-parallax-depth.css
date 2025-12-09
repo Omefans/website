@@ -205,86 +205,97 @@ html {
     max-width: 900px; 
 }
 
-/* --- MOBILE RESPONSIVE FIXES (Max Width 768px) --- */
+/* ========================================= */
+/* MOBILE RESPONSIVE FIXES (FINAL)      */
+/* ========================================= */
+
 @media (max-width: 768px) {
     
-    /* 1. FORCE HEADER LOGO TO CENTER */
+    /* --- 1. HEADER LOGO CENTERING --- */
     .logo-container {
-        position: relative !important;
-        top: 20px !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
+        /* Override HTML inline styles completely */
+        position: absolute !important;
+        top: 25px !important;
+        left: 50% !important;  /* Move edge to center */
+        transform: translateX(-50%) !important; /* Move back by 50% to center perfectly */
+        
+        /* Layout logic */
+        width: auto !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        text-align: center !important;
+        white-space: nowrap !important;
     }
     
-    /* Ensure the internal link container is also centered */
+    /* Ensure the link inside doesn't block the layout */
     .logo {
+        display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
-        width: auto !important;
+        width: 100% !important;
     }
-    
-    /* Mobile Header Image Size */
+
+    /* Header Image Size on Mobile */
     .logo-container img {
         width: 60px !important;
         height: 60px !important;
     }
     
+    /* Header Text Size on Mobile */
     .logo-container .logo-text-header {
         font-size: 1.5rem !important;
     }
 
-    /* 2. FORCE CENTER LOGO (BIG ONE) TO CENTER */
-    .center-logo-img {
-        display: block !important;       /* Makes it a block element */
-        margin-left: auto !important;    /* Auto margin left */
-        margin-right: auto !important;   /* Auto margin right */
-        margin-bottom: 20px !important;
-        max-width: 70% !important;       /* Keeps it nicely sized */
-        height: auto !important;
-        filter: drop-shadow(0 0 20px rgba(255, 0, 234, 0.6)) !important;
+
+    /* --- 2. MAIN CONTENT CENTERING --- */
+    .hero-content {
+        /* Use absolute center hack */
+        position: absolute !important;
+        top: 55% !important; /* Push slightly down */
+        left: 50% !important; 
+        transform: translate(-50%, -50%) !important;
+        
+        /* Ensure width fits screen with padding */
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 20px !important;
+        
+        /* Force Flex Column Layout */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
     }
 
-    /* 3. Fix the Subtitle Wrapping & Centering */
-    .hero-subtitle {
-        font-size: 1rem !important;
-        white-space: normal !important;
-        line-height: 1.5;
-        padding: 0 15px;
-        text-align: center !important;
-        width: 100% !important;
+    /* Center Logo (Big One) */
+    .center-logo-img {
+        max-width: 80% !important;
+        height: auto !important;
+        margin: 0 auto 10px auto !important; /* Auto margins enforce centering */
         display: block !important;
     }
 
-    /* 4. Stack Buttons Vertically */
+    /* Subtitle Text */
+    .hero-subtitle {
+        font-size: 1rem !important;
+        display: block !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /* --- 3. BUTTONS STACKED --- */
     .cta-container {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column !important; /* Stack vertically */
+        align-items: center !important;    /* Center horizontally */
+        width: 100% !important;
         gap: 15px !important;
-        width: 100%;
     }
 
     .cta-button {
-        width: 80% !important; /* Buttons take up 80% of screen width */
-        max-width: 300px;
-        box-sizing: border-box;
-        text-align: center;
-    }
-
-    /* Adjust main content spacing */
-    .hero-content {
-        margin-top: 30px; 
-        padding-bottom: 50px;
         width: 100% !important;
-        left: 0 !important;
-        transform: none !important;
-        display: flex !important;
-        flex-direction: column;
-        align-items: center; /* Flex centering for the column */
+        max-width: 280px !important; /* Reasonable max width for buttons */
+        display: block !important;
+        text-align: center !important;
     }
 }
