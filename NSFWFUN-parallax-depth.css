@@ -1,5 +1,5 @@
 @charset "utf-8";
-/* NSFWFUN Main Stylesheet - Recoded for Stability */
+/* NSFWFUN Main Stylesheet - RECODED CLEAN */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -8,7 +8,6 @@
 	--secondary: #ff00ea;
 	--dark: #0a0a0f;
 	--light: #ffffff;
-	--glow: #00ffcc;
 	--font-display: 'Orbitron', monospace;
 	--font-heading: 'Space Grotesk', sans-serif;
 	--font-body: 'Inter', sans-serif;
@@ -18,27 +17,28 @@ body {
 	font-family: var(--font-body);
 	background: var(--dark);
 	overflow-x: hidden;
-	cursor: crosshair;
-	font-weight: 300;
-	letter-spacing: 0.02em;
+	width: 100%;
+    min-height: 100vh;
 }
 
-/* --- HERO CONTAINER SETUP --- */
+/* --- 1. HERO CONTAINER (THE PARENT) --- */
+/* This is the magic. We make the whole screen a Flexbox. */
 .hero-container {
     position: relative;
     height: 100vh;
     width: 100%;
-    overflow: hidden;
+    display: flex;              /* Turn on Flexbox */
+    justify-content: center;    /* Center Horizontally */
+    align-items: center;        /* Center Vertically */
     background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
-    /* Default Desktop Layout: Free positioning */
-    display: block; 
+    overflow: hidden;
 }
 
-/* --- HEADER LOGO STYLES (Desktop Default) --- */
+/* --- 2. HEADER LOGO (Top Left) --- */
 .logo-container {
-    position: absolute;
-    top: 50px;
-    left: 60px;
+    position: absolute; /* Takes it out of the flex flow */
+    top: 40px;
+    left: 50px;
     z-index: 100;
 }
 
@@ -50,75 +50,75 @@ body {
 }
 
 .logo img {
-    width: 80px; 
-    height: 80px; 
+    width: 70px;
+    height: 70px;
     filter: drop-shadow(0 0 10px rgba(255, 0, 234, 0.5));
 }
 
 .logo-text-header {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 900;
     color: #fff;
-    white-space: nowrap;
+    letter-spacing: 0.05em;
 }
 
-/* --- CENTER CONTENT STYLES (Desktop Default) --- */
+/* --- 3. CENTER CONTENT (The Middle Box) --- */
 .hero-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
     z-index: 10;
+    text-align: center;
     width: 100%;
     max-width: 900px;
-    padding: 0 20px;
+    padding: 20px;
+    /* No positioning needed here, the parent flex container handles it */
 }
 
+/* Center Logo Size (PC Default) */
 .center-logo-img {
-    max-width: 450px; 
-    height: auto; 
-    margin-bottom: 10px; 
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
     filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.8));
 }
 
 .hero-subtitle {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 300;
     color: #fff;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
 }
 
-/* --- BUTTONS --- */
+/* --- 4. BUTTONS --- */
 .cta-container {
     display: flex;
-    gap: 20px;
     justify-content: center;
+    gap: 20px;
 }
 
 .cta-button {
-	display: inline-block;
-	padding: 15px 40px;
-	background: linear-gradient(135deg, var(--primary), var(--secondary));
-	color: var(--light);
-	text-decoration: none;
-	border-radius: 50px;
-	font-size: 1.1rem;
-	font-weight: bold;
-	position: relative;
-	overflow: hidden;
-	transition: all 0.3s ease;
+    display: inline-block;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--light);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
-    text-align: center;
+}
+
+.cta-button.contact-btn {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
 }
 
 .cta-button:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
 }
 
 /* --- BACKGROUND FX --- */
@@ -130,94 +130,78 @@ body {
 .mouse-follower { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 9999; transition: all 0.1s ease; transform: translate(-50%, -50%); }
 
 /* --- FOOTER --- */
-.footer { background: linear-gradient(180deg, var(--dark) 0%, #0a0a0f 100%); padding: 60px 5% 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); position: relative; z-index: 20; }
+.footer { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(180deg, transparent 0%, #0a0a0f 100%); padding: 30px 20px; z-index: 20; }
 .footer-content { max-width: 1200px; margin: 0 auto; text-align: center; }
-.footer-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; flex-wrap: wrap; }
-.footer-link { color: rgba(255, 255, 255, 0.8); text-decoration: none; font-family: var(--font-heading); font-size: 1rem; position: relative; transition: all 0.3s ease; }
+.footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+.footer-link { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-family: var(--font-heading); font-size: 0.9rem; transition: color 0.3s ease; }
 .footer-link:hover { color: var(--primary); }
-.footer-divider { width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); margin: 30px auto; }
-.footer-copyright { color: rgba(255, 255, 255, 0.6); font-family: var(--font-heading); font-size: 0.9rem; }
+.footer-divider { width: 60px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 20px auto; }
+.footer-copyright { color: rgba(255, 255, 255, 0.5); font-family: var(--font-heading); font-size: 0.8rem; }
 .footer-copyright a { color: var(--primary); text-decoration: none; }
 
-/* --- OTHER PAGE HELPERS --- */
-.form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; }
-.submit-btn { border:none; cursor: pointer; }
+/* Contact/Gallery Specifics (Kept simple) */
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
-.big-folder:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 0, 234, 0.4); transition: all 0.3s ease; }
-.affiliate-link-wrapper { text-decoration: none; display: block; }
+.form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; margin-bottom: 15px;}
+.submit-btn { border:none; cursor: pointer; color: white; background: var(--primary); padding: 10px 20px; border-radius: 5px;}
 
-
-/* ================================================= */
-/* 📱 MOBILE LAYOUT ENGINE (Max-Width: 768px)       */
-/* ================================================= */
+/* ========================================= */
+/* 📱 MOBILE RESPONSIVE ENGINE (Nuclear Option) */
+/* ========================================= */
 
 @media (max-width: 768px) {
     
-    /* 1. SWITCH TO FLEX COLUMN LAYOUT */
-    /* This stops using coordinates and just stacks items vertically */
-    .hero-container {
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important; /* Centers vertical alignment */
-        align-items: center !important;     /* Centers horizontal alignment */
-        padding-top: 0 !important;
-    }
-
-    /* 2. HEADER LOGO (Now just the top item in the stack) */
+    /* 1. HEADER LOGO: Move from Top-Left to Top-Center */
     .logo-container {
-        position: static !important; /* Remove absolute positioning */
-        margin-bottom: 20px !important; /* Push the main content down */
-        top: auto !important;
-        left: auto !important;
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
+        top: 25px;       /* Spacing from top */
+        left: 50%;       /* Move to middle of screen */
+        transform: translateX(-50%); /* PERFECTLY CENTER IT */
+        width: 100%;     /* Full width container */
+        display: flex;
+        justify-content: center;
     }
-    
+
     .logo img {
-        width: 60px !important;
-        height: 60px !important;
+        width: 50px;     /* Smaller icon for mobile */
+        height: 50px;
     }
-    
+
     .logo-text-header {
-        font-size: 1.5rem !important;
+        font-size: 1.4rem; /* Smaller text for mobile */
     }
 
-    /* 3. MAIN CONTENT (The second item in the stack) */
+    /* 2. CENTER CONTENT: Adjust size and spacing */
     .hero-content {
-        position: static !important; /* Remove absolute positioning */
-        transform: none !important;
-        width: 100% !important;
-        padding: 0 20px !important;
-        margin-bottom: 40px !important;
+        margin-top: 40px; /* Push down slightly to clear the header */
     }
 
-    /* 4. CONTENT ADJUSTMENTS */
-    /* Smaller Big Logo */
     .center-logo-img {
-        max-width: 60% !important; 
-        margin: 0 auto 15px auto !important;
-        display: block !important;
+        max-width: 60%; /* Shrink center logo */
     }
 
-    /* Title that fits */
     .hero-subtitle {
-        font-size: 0.95rem !important;
-        letter-spacing: 0.1em !important;
-        white-space: normal !important;
-        line-height: 1.4 !important;
-        margin-bottom: 30px !important;
+        font-size: 0.9rem;       /* Smaller font */
+        letter-spacing: 0.1em;   /* Reduced spacing */
+        line-height: 1.4;
+        width: 90%;              /* Prevent edge touching */
+        margin: 0 auto 25px auto;
     }
 
-    /* Stacked Buttons */
+    /* 3. BUTTONS: Stack them */
     .cta-container {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 15px !important;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
     }
 
     .cta-button {
-        width: 80% !important;
-        max-width: 300px !important;
+        width: 70%;
+        max-width: 280px;
+        text-align: center;
+    }
+    
+    /* 4. FOOTER: Ensure it doesn't overlap on small screens */
+    .footer {
+        position: relative; /* Stop being sticky if screen is short */
+        margin-top: 50px;
     }
 }
