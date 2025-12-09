@@ -21,7 +21,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    cursor: none; /* Hides default cursor for custom one */
+    cursor: none;
+    
+    /* FIX: Makes fonts look crisp on dark backgrounds */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 /* --- 2. LAYOUT STRUCTURE --- */
@@ -37,8 +42,6 @@ body {
 .logo-container {
     padding: 30px 40px;
     width: 100%;
-    
-    /* ANIMATION: Header slides down from top */
     animation: slideDown 1s ease-out forwards;
 }
 
@@ -74,7 +77,23 @@ body {
     width: 100%;
     padding: 40px 20px;
     position: relative !important; 
-    margin-top: -40px; /* Pulls content slightly up */
+    margin-top: -40px;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px var(--primary);
+}
+
+.lead {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 /* CENTER LOGO IMAGE */
@@ -85,20 +104,10 @@ body {
     filter: drop-shadow(0 0 30px rgba(255, 0, 234, 0.6));
     margin-bottom: 30px;
     
-    /* ANIMATION 1: Zoom/Pop In on load */
-    animation: popIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    opacity: 0; /* Starts hidden */
-}
-
-/* To make the logo float continuously, we apply it to a wrapper or use a delay. 
-   Here is a trick: We use the image itself for the PopIn, but we add a 
-   hover effect or a secondary class for floating if you had a wrapper.
-   For now, let's make it breathe (scale gently) after loading. */
-.center-logo-img {
-    /* Overwriting to include the continuous float after the pop-in */
-    /* We use a delay for the float so it starts after the pop-in finishes */
+    /* FIX: Chained animations so it pops in then floats smoothly */
     animation: popIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
-               float 6s ease-in-out infinite 1.2s; /* 1.2s delay */
+               float 6s ease-in-out infinite 1.2s; 
+    opacity: 0; 
 }
 
 /* SUBTITLE */
@@ -110,8 +119,6 @@ body {
     text-transform: uppercase;
     text-shadow: 0 0 15px var(--primary);
     margin-bottom: 40px;
-    
-    /* ANIMATION: Fade In */
     animation: fadeIn 1.5s ease forwards;
     animation-delay: 0.5s;
     opacity: 0;
@@ -124,8 +131,6 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
-    
-    /* ANIMATION: Slide Up */
     animation: slideUp 1s ease forwards;
     animation-delay: 0.8s;
     opacity: 0;
@@ -141,21 +146,23 @@ body {
     font-size: 1.1rem;
     font-weight: bold;
     border: 1px solid rgba(255,255,255,0.2);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: none;
 }
 
-/* Add a Pulse to the first button to draw attention */
 .cta-button:first-child {
-    animation: pulseGlow 3s infinite 2s; /* Starts after 2 seconds */
+    animation: pulseGlow 3s infinite 2s; 
 }
 
 .cta-button.contact-btn {
     background: linear-gradient(135deg, var(--secondary), var(--primary));
-    animation: none; /* No pulse for the second button */
+    animation: none; 
 }
 
-.cta-button:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--primary); }
+.cta-button:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 0 20px var(--primary); 
+}
 
 /* --- 4. FOOTER --- */
 .footer {
@@ -166,8 +173,6 @@ body {
     margin-top: auto;
     position: relative;
     z-index: 20;
-    
-    /* ANIMATION: Fade In */
     animation: fadeIn 2s ease forwards;
     animation-delay: 1s;
     opacity: 0;
@@ -197,13 +202,17 @@ body {
 
 .footer-divider { width: 80px; height: 1px; background: rgba(255,255,255,0.2); margin: 0 auto 20px; }
 .footer-copyright { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.5; }
+.footer-copyright a { color: var(--primary); text-decoration: none; cursor: none; }
 
-/* --- 5. GALLERY GRID (UPDATED) --- */
-.gallery-section {
-    padding: 40px 20px;
+/* --- 5. GALLERY GRID --- */
+.container {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .gallery-grid {
@@ -211,7 +220,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 25px; 
     width: 100%; 
-    max-width: 1200px;
+    margin-top: 20px;
 }
 
 .gallery-item {
@@ -219,95 +228,166 @@ body {
     border-radius: 15px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.04); /* Fixed opacity */
     transition: all 0.4s ease;
-    aspect-ratio: 16/9; /* Ensures uniform shape */
+    padding: 10px; /* Matching your structure */
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-item a.affiliate-link-wrapper {
+    text-decoration: none;
+    display: block;
+    cursor: none;
 }
 
 .gallery-item img {
     width: 100%;
-    height: 100%;
+    height: 200px; /* Fixed height for consistency */
     object-fit: cover;
+    border-radius: 8px;
     transition: transform 0.5s ease;
     display: block;
 }
 
 /* Hover Effects for Gallery */
 .gallery-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-7px);
     border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.2);
     z-index: 2;
 }
 
 .gallery-item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
-/* Optional Caption Overlay */
-.gallery-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.gallery-item h3 {
+    margin-top: 15px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.gallery-item p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 15px;
+}
+
+.btn-view {
+    display: block;
+    text-align: center;
+    padding: 10px 12px;
+    background: rgba(0, 217, 255, 0.1);
+    color: var(--primary);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    font-size: 0.9rem;
+    margin-top: auto;
+    transition: all 0.3s;
+    cursor: none;
+}
+
+.btn-view:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* --- 6. CONTACT FORM --- */
+.contact-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-form-wrapper {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
+
+.form-group { margin-bottom: 20px; width: 100%; }
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--font-heading);
+    color: var(--primary);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.form-input, .form-textarea {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.gallery-item:hover .gallery-caption {
-    opacity: 1;
-}
-
-.gallery-caption h3 {
-    font-family: var(--font-display);
+    background: rgba(10, 10, 15, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-family: var(--font-body);
     font-size: 1rem;
-    color: var(--primary);
-    margin-bottom: 5px;
+    transition: all 0.3s ease;
 }
 
-/* --- 6. ANIMATION KEYFRAMES --- */
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 15px rgba(255, 0, 234, 0.2);
+    background: rgba(10, 10, 15, 1);
+}
 
-/* 1. Header Slide Down */
+.form-textarea { resize: vertical; min-height: 120px; }
+.submit-btn { width: 100%; margin-top: 10px; border: none; }
+
+/* --- 7. ANIMATION KEYFRAMES --- */
 @keyframes slideDown {
     0% { transform: translateY(-100%); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
 }
 
-/* 2. Logo Pop In */
 @keyframes popIn {
     0% { transform: scale(0.5) translateY(20px); opacity: 0; }
     100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* 3. Logo Continuous Float (Levitation) */
+/* FIX: Float now includes scale(1) so it doesn't conflict with popIn */
 @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); } /* Moves up */
-    100% { transform: translateY(0px); }
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-15px) scale(1); } 
+    100% { transform: translateY(0px) scale(1); }
 }
 
-/* 4. Button Slide Up */
 @keyframes slideUp {
     0% { transform: translateY(30px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
 }
 
-/* 5. General Fade In */
 @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
 
-/* 6. Button Pulse Glow */
 @keyframes pulseGlow {
     0% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.4); }
     70% { box-shadow: 0 0 0 15px rgba(0, 217, 255, 0); }
     100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0); }
 }
 
-/* --- 7. BACKGROUND FX --- */
+/* --- 8. BACKGROUND FX --- */
 .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
 @keyframes twinkle { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
@@ -328,82 +408,13 @@ body {
     filter: blur(50px);
 }
 
-/* --- 8. MOBILE OPTIMIZATIONS --- */
+/* --- 9. MOBILE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
     .logo-container { display: flex; justify-content: center; padding: 20px; }
     .logo img { width: 60px; height: 60px; }
     .logo-text-header { font-size: 1.4rem; }
     .center-logo-img { max-width: 260px; margin-bottom: 20px; }
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
     .cta-container { flex-direction: column; align-items: center; }
     .cta-button { width: 80%; max-width: 280px; text-align: center; }
-}
-
-/* --- 9. CONTACT FORM (NEW) --- */
-.contact-section {
-    width: 100%;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.contact-form-wrapper {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.form-group {
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-family: var(--font-heading);
-    color: var(--primary);
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-.form-input, 
-.form-textarea {
-    width: 100%;
-    padding: 15px;
-    background: rgba(10, 10, 15, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-input:focus, 
-.form-textarea:focus {
-    outline: none;
-    border-color: var(--secondary);
-    box-shadow: 0 0 15px rgba(255, 0, 234, 0.2);
-    background: rgba(10, 10, 15, 1);
-}
-
-.form-textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-/* Contact Submit Button styles inherit from .cta-button 
-   but we add a specific class if you need overrides */
-.submit-btn {
-    width: 100%;
-    margin-top: 10px;
-    border: none;
 }
